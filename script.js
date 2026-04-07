@@ -7,45 +7,30 @@ if (mobileMenuBtn && mobileMenu) {
   mobileMenuBtn.addEventListener('click', () => {
     mobileMenu.classList.toggle('open');
   });
-  // Close on nav link click
   mobileMenu.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => mobileMenu.classList.remove('open'));
   });
 }
 
-// ---- Process Tabs ----
-const stepBtns = document.querySelectorAll('.step-btn');
-const stepContents = document.querySelectorAll('.process-step-content');
-stepBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const step = btn.getAttribute('data-step');
-    stepBtns.forEach(b => b.classList.remove('active'));
-    stepContents.forEach(c => c.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelector('.process-step-content[data-step="' + step + '"]')?.classList.add('active');
-  });
-});
-
 // ---- FAQ Accordion ----
 const faqQuestions = document.querySelectorAll('.faq-question');
 faqQuestions.forEach(q => {
   q.addEventListener('click', () => {
-    const isOpen = q.getAttribute('aria-expanded') === 'true';
+    const item = q.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
     // Close all
-    faqQuestions.forEach(other => {
-      other.setAttribute('aria-expanded', 'false');
-      other.nextElementSibling?.classList.remove('open');
+    document.querySelectorAll('.faq-item').forEach(other => {
+      other.classList.remove('open');
     });
     // Toggle current
     if (!isOpen) {
-      q.setAttribute('aria-expanded', 'true');
-      q.nextElementSibling?.classList.add('open');
+      item.classList.add('open');
     }
   });
 });
 
 // ---- Scroll Animations ----
-const fadeEls = document.querySelectorAll('.benefit-card, .service-card, .feature-item, .faq-item, .comparison-card, .process-step-content');
+const fadeEls = document.querySelectorAll('.card, .service-card, .feature-item, .metric-card, .kanban-card, .comparison-card, .faq-item, .widget');
 fadeEls.forEach(el => el.classList.add('fade-in'));
 
 const observer = new IntersectionObserver((entries) => {
@@ -59,7 +44,7 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
 // ---- Navbar scroll effect ----
-const navbar = document.querySelector('.navbar');
+const navbar = document.querySelector('.site-header');
 window.addEventListener('scroll', () => {
   if (window.scrollY > 40) {
     navbar?.classList.add('scrolled');

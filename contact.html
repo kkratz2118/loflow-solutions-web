@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - LOFlow Solutions</title>
+  <meta name="description" content="Get in touch with LOFlow Solutions. Book a free call or send us a message.">
+  <link rel="icon" href="https://framerusercontent.com/images/Jm69rIB1PefyruqirA2AJUkdvBQ.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo-link">
+        <img src="https://framerusercontent.com/images/Jm69rIB1PefyruqirA2AJUkdvBQ.png" alt="LOFlow Solutions" class="logo-img">
+      </a>
+      <nav class="nav-links">
+        <a href="index.html#services" class="nav-link">Services</a>
+        <a href="index.html#process" class="nav-link">Process</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+      <a href="https://ro.am/loflow-solutions-llc/lobby-3" target="_blank" rel="noopener" class="btn-cta nav-cta">
+        <span>Book A Free Call</span>
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html#services" class="mobile-nav-link">Services</a>
+      <a href="index.html#process" class="mobile-nav-link">Process</a>
+      <a href="contact.html" class="mobile-nav-link">Contact</a>
+      <a href="https://ro.am/loflow-solutions-llc/lobby-3" target="_blank" class="btn-cta mobile-cta">Book A Free Call ↗</a>
+    </div>
+  </header>
+
+  <main class="contact-page">
+    <div class="section-inner">
+      <div class="section-tag">CONTACT</div>
+      <h1 class="section-heading">Get in <span class="highlight">Touch</span></h1>
+      <p class="section-sub">Have a question or ready to get started? We'd love to hear from you.</p>
+
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="name">Full Name</label>
+          <input class="form-input" type="text" id="name" name="name" placeholder="Your full name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <input class="form-input" type="email" id="email" name="email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="company">Company / Brokerage</label>
+          <input class="form-input" type="text" id="company" name="company" placeholder="Your company name">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="message">Message</label>
+          <textarea class="form-textarea" id="message" name="message" placeholder="Tell us about your mortgage CRM needs..." required></textarea>
+        </div>
+        <button type="submit" class="btn-cta form-submit">
+          <span>Send Message</span>
+          <svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </form>
+
+      <div style="margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--divider);">
+        <p style="font-size:14px; color: var(--text-muted); margin-bottom: 12px;">Or reach us directly:</p>
+        <a href="mailto:hello@loflowsolutions.com" style="font-size:15px; color: var(--text-primary); text-decoration: underline; text-underline-offset: 3px;">hello@loflowsolutions.com</a>
+        <br><br>
+        <a href="https://ro.am/loflow-solutions-llc/lobby-3" target="_blank" class="btn-cta" style="width:fit-content; display:inline-flex;">
+          <span>Book A Free Call</span>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo-link">
+        <img src="https://framerusercontent.com/images/Jm69rIB1PefyruqirA2AJUkdvBQ.png" alt="LOFlow Solutions" class="footer-logo">
+      </a>
+      <nav class="footer-nav">
+        <a href="index.html#services">Services</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="contact.html">Contact</a>
+        <a href="#">Blog</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+      <div class="footer-divider"></div>
+      <p class="footer-copy">EST. 2025 LOFLOW SOLUTIONS LLC | 2108 N ST #11770 SACRAMENTO CA, 95816</p>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -80,15 +80,18 @@ function goToStep(step) {
     };
     console.log('Booking form data:', data);
 
+    // Open Roam in new tab
+    window.open(ROAM_URL, '_blank');
+
+    // Show confirmation in modal
     const lobbyEl = document.getElementById('roamLobby');
     if (lobbyEl) {
-      lobbyEl.innerHTML = '';
-      const iframe = document.createElement('iframe');
-      iframe.src = ROAM_URL;
-      iframe.title = 'Book a call';
-      iframe.allow = 'camera; microphone';
-      iframe.setAttribute('allowfullscreen', '');
-      lobbyEl.appendChild(iframe);
+      lobbyEl.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;gap:20px;">'
+        + '<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#1DE9B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'
+        + '<h3 style="font-family:var(--font);font-size:1.3rem;margin:0;">You\'re all set, ' + (data.firstName || '') + '!</h3>'
+        + '<p style="color:var(--fg-muted);font-size:0.9rem;max-width:360px;margin:0;">Your booking page just opened in a new tab. Pick a time that works and we\'ll take it from there.</p>'
+        + '<a href="' + ROAM_URL + '" target="_blank" rel="noopener" class="btn-primary" style="width:fit-content;margin-top:8px;">OPEN BOOKING PAGE &rarr;</a>'
+        + '</div>';
     }
   }
 

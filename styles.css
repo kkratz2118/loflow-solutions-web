@@ -1525,14 +1525,6 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
 }
 .modal-iframe-wrap {
   width: 100%;
-  border-radius: 8px;
-  overflow: hidden;
-}
-.modal-iframe-wrap iframe {
-  width: 100%;
-  height: calc(100vh - 200px);
-  border: none;
-  display: block;
 }
 .booking-modal.fullscreen {
   max-width: none;

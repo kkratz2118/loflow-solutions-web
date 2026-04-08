@@ -7,17 +7,22 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #ffffff;
+  --bg: #FFFFFF;
   --bg-muted: #f4f4f5;
-  --fg: #09090b;
-  --fg-muted: #71717a;
-  --border: #e4e4e7;
-  --primary: #18181b;
-  --primary-fg: #fafafa;
+  --fg: #121212;
+  --fg-muted: #5A5A5A;
+  --border: #E0E0E0;
+  --primary: #121212;
+  --primary-fg: #FEFFFF;
+  --accent: #1DE9B6;
+  --accent-dark: #0D654F;
+  --accent-light: #D4FBF1;
+  --accent-mid: #1ACFA2;
   --card-bg: #ffffff;
   --radius: 0.75rem;
-  --font: 'Courier New', Courier, monospace;
+  --font: 'IBM Plex Mono', monospace;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-accent: 'Playfair Display', Georgia, serif;
   --max-w: 1152px;
 }
 
@@ -270,7 +275,7 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   transform: translateX(-50%);
   width: 800px;
   height: 600px;
-  background: radial-gradient(ellipse, rgba(20,184,166,0.07) 0%, rgba(59,130,246,0.05) 50%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(29,233,182,0.1) 0%, rgba(13,101,79,0.05) 50%, transparent 70%);
   border-radius: 50%;
 }
 
@@ -279,20 +284,20 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid rgba(16,185,129,0.3);
-  background: #f0fdf4;
+  border: 1px solid rgba(29,233,182,0.3);
+  background: var(--accent-light);
   border-radius: 999px;
   padding: 6px 14px;
   font-size: 0.7rem;
   font-weight: 700;
-  color: #065f46;
+  color: var(--accent-dark);
   margin-bottom: 20px;
 }
 
 .badge-dot {
   width: 8px;
   height: 8px;
-  background: #10b981;
+  background: var(--accent);
   border-radius: 50%;
   animation: pulse-dot 2s infinite;
 }
@@ -405,7 +410,7 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
 .live-dot {
   width: 6px;
   height: 6px;
-  background: #10b981;
+  background: var(--accent);
   border-radius: 50%;
   animation: pulse-dot 2s infinite;
 }
@@ -438,7 +443,7 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
 .widget-trend {
   font-size: 0.7rem;
   font-weight: 600;
-  color: #10b981;
+  color: var(--accent);
   margin-bottom: 16px;
 }
 
@@ -471,7 +476,7 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
 
 .widget-card-delta {
   font-size: 0.65rem;
-  color: #10b981;
+  color: var(--accent);
   font-weight: 600;
 }
 
@@ -583,7 +588,7 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
 .metric-delta {
   font-size: 0.65rem;
   font-weight: 600;
-  color: #10b981;
+  color: var(--accent);
 }
 
 /* ─── KANBAN ───────────────────────────────────────── */
@@ -887,8 +892,8 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
 }
 
 .comparison-us {
-  border-color: #10b981;
-  background: #f0fdf4;
+  border-color: var(--accent);
+  background: var(--accent-light);
 }
 
 .comparison-logo-wrap {
@@ -929,7 +934,7 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
 
 .comparison-list li svg {
   flex-shrink: 0;
-  stroke: #10b981;
+  stroke: var(--accent);
 }
 
 .comparison-list-neg li svg {
@@ -1300,7 +1305,7 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   left: 0;
   right: 0;
   height: 6px;
-  background: rgba(16,185,129,0.2);
+  background: rgba(29,233,182,0.25);
   border-radius: 2px;
   z-index: -1;
 }

@@ -36,7 +36,7 @@
         <a href="applications.html" class="nav-link">Our Tools</a>
         <a href="#how-it-works" class="nav-link">Process</a>
       </div>
-      <a href="https://ro.am/loflow-solutions-llc/lobby-3" target="_blank" rel="noopener" class="nav-cta">
+      <a href="#" onclick="openBookingModal(); return false;" class="nav-cta">
         <span>Book A Free Call</span>
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
@@ -48,7 +48,7 @@
       <a href="#services" class="mobile-nav-link">Services</a>
       <a href="applications.html" class="mobile-nav-link">Our Tools</a>
       <a href="#how-it-works" class="mobile-nav-link">Process</a>
-      <a href="https://ro.am/loflow-solutions-llc/lobby-3" target="_blank" class="mobile-cta">Book A Free Call</a>
+      <a href="#" onclick="openBookingModal(); return false;" class="mobile-cta">Book A Free Call</a>
     </div>
   </header>
 
@@ -78,7 +78,7 @@
             </p>
 
             <div class="btn-group">
-              <a href="https://ro.am/loflow-solutions-llc/lobby-3" target="_blank" rel="noopener" class="btn-primary">
+              <a href="#" onclick="openBookingModal(); return false;" class="btn-primary">
                 BOOK A FREE CALL &rarr;
               </a>
               <a href="#services" class="btn-secondary">
@@ -683,7 +683,7 @@
         <div class="cta-tag">Reach out anytime</div>
         <h2 class="cta-heading">READY TO OWN YOUR TECH?<br><span class="highlight">LET'S BUILD YOUR SYSTEM</span></h2>
         <p class="cta-sub">Stop renting bloated CRMs. Get a custom mortgage system that actually drives revenue.</p>
-        <a href="https://ro.am/loflow-solutions-llc/lobby-3" target="_blank" rel="noopener" class="btn-primary">
+        <a href="#" onclick="openBookingModal(); return false;" class="btn-primary">
           BOOK A FREE CALL &rarr;
         </a>
         <div class="cta-social">
@@ -732,6 +732,81 @@
     </div>
   </footer>
 
+  <!-- Booking Modal -->
+  <div class="booking-overlay" id="bookingOverlay">
+    <div class="booking-modal">
+      <div class="modal-header">
+        <span class="modal-progress" id="modalProgress">Step 1 of 3</span>
+        <button class="modal-close" onclick="closeBookingModal()" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Step 1 -->
+        <div class="modal-step active" id="modalStep1">
+          <h3>Let's get started</h3>
+          <p>Tell us a little about yourself.</p>
+          <div class="form-group">
+            <label class="form-label" for="bookingFirstName">First Name</label>
+            <input class="form-input" type="text" id="bookingFirstName" placeholder="First name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="bookingLastName">Last Name</label>
+            <input class="form-input" type="text" id="bookingLastName" placeholder="Last name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="bookingEmail">Email</label>
+            <input class="form-input" type="email" id="bookingEmail" placeholder="your@email.com" required>
+          </div>
+          <div class="modal-nav">
+            <button class="modal-btn-next" onclick="goToStep(2)">Next</button>
+          </div>
+        </div>
+        <!-- Step 2 -->
+        <div class="modal-step" id="modalStep2">
+          <h3>About your business</h3>
+          <p>Help us understand what you need.</p>
+          <div class="form-group">
+            <label class="form-label" for="bookingCompany">Company Name</label>
+            <input class="form-input" type="text" id="bookingCompany" placeholder="Your company name">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="bookingPhone">Phone Number</label>
+            <input class="form-input" type="tel" id="bookingPhone" placeholder="(555) 123-4567">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="bookingTool">Which tool are you interested in?</label>
+            <select class="modal-select" id="bookingTool">
+              <option value="" disabled selected>Select a tool...</option>
+              <option value="Application 01">Application 01</option>
+              <option value="Application 02">Application 02</option>
+              <option value="Application 03">Application 03</option>
+              <option value="Not sure yet">Not sure yet</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="bookingMessage">What are you looking for help with?</label>
+            <textarea class="form-textarea" id="bookingMessage" placeholder="Tell us what you're interested in..." style="min-height:80px;"></textarea>
+          </div>
+          <div class="modal-nav">
+            <button class="modal-btn-back" onclick="goToStep(1)">Back</button>
+            <button class="modal-btn-next" onclick="goToStep(3)">Connect Me!</button>
+          </div>
+        </div>
+        <!-- Step 3 -->
+        <div class="modal-step" id="modalStep3">
+          <h3>Book your call</h3>
+          <p>Pick a time that works for you.</p>
+          <div class="modal-iframe-wrap" id="roamLobby" style="min-width:320px;"></div>
+          <div class="modal-nav">
+            <button class="modal-btn-back" onclick="goToStep(2)">Back</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="https://ro.am/lobbylinks/embed.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

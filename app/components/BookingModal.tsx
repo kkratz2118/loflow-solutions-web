@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 
-const ROAM_URL = '/book/';
+const ROAM_URL = '/book';
 
 interface BookingModalProps {
   isOpen: boolean;

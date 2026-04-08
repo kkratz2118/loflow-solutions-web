@@ -29,6 +29,36 @@ faqQuestions.forEach(q => {
   });
 });
 
+// ---- Trusted By Carousel ----
+const carouselTrack = document.getElementById('carouselTrack');
+const prevBtn = document.getElementById('carouselPrev');
+const nextBtn = document.getElementById('carouselNext');
+if (carouselTrack && prevBtn && nextBtn) {
+  const slides = carouselTrack.querySelectorAll('.trusted-grid');
+  let current = 0;
+  const total = slides.length;
+
+  function goToSlide(index) {
+    current = (index + total) % total;
+    carouselTrack.style.transform = `translateX(-${current * 100}%)`;
+  }
+
+  prevBtn.addEventListener('click', () => {
+    goToSlide(current - 1);
+    resetAutoPlay();
+  });
+  nextBtn.addEventListener('click', () => {
+    goToSlide(current + 1);
+    resetAutoPlay();
+  });
+
+  let autoPlay = setInterval(() => goToSlide(current + 1), 10000);
+  function resetAutoPlay() {
+    clearInterval(autoPlay);
+    autoPlay = setInterval(() => goToSlide(current + 1), 10000);
+  }
+}
+
 // ---- Scroll Animations ----
 const fadeEls = document.querySelectorAll('.card, .service-card, .feature-item, .metric-card, .kanban-card, .comparison-card, .faq-item, .widget');
 fadeEls.forEach(el => el.classList.add('fade-in'));

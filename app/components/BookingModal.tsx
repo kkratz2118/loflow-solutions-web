@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
-const ROAM_URL = 'https://ro.am/loflow-solutions-llc/lobby-3/';
+const ROAM_URL = '/book/';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -18,12 +18,12 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
   const [phone, setPhone] = useState('');
   const [tool, setTool] = useState('');
   const [message, setMessage] = useState('');
-  const lobbyRef = useRef<HTMLDivElement>(null);
+  const [iframeSrc, setIframeSrc] = useState('');
 
   const handleClose = useCallback(() => {
     onClose();
     setStep(1);
-    if (lobbyRef.current) lobbyRef.current.innerHTML = '';
+    setIframeSrc('');
   }, [onClose]);
 
   useEffect(() => {
@@ -55,58 +55,10 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
     if (nextStep === 3) {
       const data = { firstName, lastName, email, company, phone, tool, message };
       console.log('Booking form data:', data);
-
-      if (lobbyRef.current) {
-        const note = [
-          company ? 'Company: ' + company : '',
-          phone ? 'Phone: ' + phone : '',
-          tool ? 'Interested in: ' + tool : '',
-          message ? 'Message: ' + message : '',
-        ].filter(Boolean).join(' | ');
-
-        const roam = (window as unknown as Record<string, unknown>).Roam as {
-          initLobbyEmbed?: (opts: Record<string, unknown>) => void;
-        } | undefined;
-
-        if (roam?.initLobbyEmbed) {
-          lobbyRef.current.innerHTML = '';
-          roam.initLobbyEmbed({
-            url: ROAM_URL,
-            parentElement: lobbyRef.current,
-            accentColor: '#1DE9B6',
-            theme: 'light',
-            prefill: {
-              name: ((firstName || '') + ' ' + (lastName || '')).trim(),
-              email: email || '',
-              note,
-            },
-            onSizeChange: (_width: number, height: number) => {
-              if (lobbyRef.current) {
-                lobbyRef.current.style.height = Math.max(height, 500) + 'px';
-              }
-            },
-          });
-          setTimeout(() => {
-            if (lobbyRef.current) {
-              const iframe = lobbyRef.current.querySelector('iframe');
-              if (!iframe || !iframe.offsetHeight) {
-                loadDirectIframe();
-              }
-            }
-          }, 3000);
-        } else {
-          loadDirectIframe();
-        }
-      }
+      setIframeSrc(ROAM_URL);
     }
 
     setStep(nextStep);
-  };
-
-  const loadDirectIframe = () => {
-    if (lobbyRef.current) {
-      lobbyRef.current.innerHTML = `<iframe src="${ROAM_URL}" style="width:100%;height:100%;min-height:600px;border:none;border-radius:8px;" title="Book a call"></iframe>`;
-    }
   };
 
   if (!isOpen) return null;
@@ -182,7 +134,17 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
             <div className="modal-step active">
               <h3>Book your call</h3>
               <p>Pick a time that works for you.</p>
-              <div className="modal-iframe-wrap" ref={lobbyRef} style={{ minWidth: '320px' }} />
+              <div className="modal-iframe-wrap">
+                {iframeSrc && (
+                  <iframe
+                    src={iframeSrc}
+                    title="Book a call"
+                    allow="camera; microphone"
+                    allowFullScreen
+                    style={{ width: '100%', height: 'calc(100vh - 200px)', border: 'none', borderRadius: '8px' }}
+                  />
+                )}
+              </div>
               <div className="modal-nav">
                 <button className="modal-btn-back" onClick={() => goToStep(2)}>Back</button>
               </div>

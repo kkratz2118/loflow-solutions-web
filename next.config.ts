@@ -9,6 +9,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/book/:path*',
+        destination: 'https://ro.am/loflow-solutions-llc/lobby-3/:path*',
+      },
+    ];
+  },
 };
 
 export default nextConfig;

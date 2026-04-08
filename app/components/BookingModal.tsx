@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 
-const ROAM_URL = '/book';
+const ROAM_URL = 'https://ro.am/loflow-solutions-llc/lobby-3/';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -18,12 +18,10 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
   const [phone, setPhone] = useState('');
   const [tool, setTool] = useState('');
   const [message, setMessage] = useState('');
-  const [iframeSrc, setIframeSrc] = useState('');
 
   const handleClose = useCallback(() => {
     onClose();
     setStep(1);
-    setIframeSrc('');
   }, [onClose]);
 
   useEffect(() => {
@@ -55,7 +53,7 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
     if (nextStep === 3) {
       const data = { firstName, lastName, email, company, phone, tool, message };
       console.log('Booking form data:', data);
-      setIframeSrc(ROAM_URL);
+      window.open(ROAM_URL, '_blank');
     }
 
     setStep(nextStep);
@@ -67,7 +65,7 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
     <div className="booking-overlay open" onClick={(e) => {
       if ((e.target as HTMLElement).classList.contains('booking-overlay')) handleClose();
     }}>
-      <div className={`booking-modal${step === 3 ? ' fullscreen' : ''}`}>
+      <div className="booking-modal">
         <div className="modal-header">
           <span className="modal-progress">Step {step} of 3</span>
           <button className="modal-close" onClick={handleClose} aria-label="Close">
@@ -132,21 +130,13 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
 
           {step === 3 && (
             <div className="modal-step active">
-              <h3>Book your call</h3>
-              <p>Pick a time that works for you.</p>
-              <div className="modal-iframe-wrap">
-                {iframeSrc && (
-                  <iframe
-                    src={iframeSrc}
-                    title="Book a call"
-                    allow="camera; microphone"
-                    allowFullScreen
-                    style={{ width: '100%', height: 'calc(100vh - 200px)', border: 'none', borderRadius: '8px' }}
-                  />
-                )}
-              </div>
-              <div className="modal-nav">
-                <button className="modal-btn-back" onClick={() => goToStep(2)}>Back</button>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '60px 24px', gap: '20px' }}>
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#1DE9B6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <h3 style={{ fontFamily: 'var(--font)', fontSize: '1.3rem', margin: 0 }}>You&apos;re all set, {firstName}!</h3>
+                <p style={{ color: 'var(--fg-muted)', fontSize: '0.9rem', maxWidth: '360px', margin: 0 }}>Your booking page just opened in a new tab. Pick a time that works and we&apos;ll take it from there.</p>
+                <a href={ROAM_URL} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ width: 'fit-content', marginTop: '8px' }}>
+                  OPEN BOOKING PAGE &rarr;
+                </a>
               </div>
             </div>
           )}

@@ -1526,19 +1526,13 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
 .modal-iframe-wrap {
   width: 100%;
   border-radius: 8px;
-  overflow: visible;
-  min-height: 700px;
-  position: relative;
+  overflow: hidden;
 }
 .modal-iframe-wrap iframe {
-  width: 100% !important;
-  height: 100% !important;
-  min-height: 700px !important;
-  border: none !important;
-  display: block !important;
-  position: absolute;
-  top: 0;
-  left: 0;
+  width: 100%;
+  height: calc(100vh - 200px);
+  border: none;
+  display: block;
 }
 .booking-modal.fullscreen {
   max-width: none;

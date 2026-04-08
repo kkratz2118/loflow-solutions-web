@@ -83,46 +83,12 @@ function goToStep(step) {
     const lobbyEl = document.getElementById('roamLobby');
     if (lobbyEl) {
       lobbyEl.innerHTML = '';
-
-      const note = [
-        data.company ? 'Company: ' + data.company : '',
-        data.phone ? 'Phone: ' + data.phone : '',
-        data.tool ? 'Interested in: ' + data.tool : '',
-        data.message ? 'Message: ' + data.message : '',
-      ].filter(Boolean).join(' | ');
-
-      const fullName = ((data.firstName || '') + ' ' + (data.lastName || '')).trim();
-
-      // Use Roam SDK embed with prefill
-      if (typeof Roam !== 'undefined' && typeof Roam.initLobbyEmbed === 'function') {
-        Roam.initLobbyEmbed({
-          url: ROAM_URL,
-          parentElement: lobbyEl,
-          accentColor: '#1DE9B6',
-          theme: 'light',
-          prefill: {
-            name: fullName,
-            email: data.email || '',
-            note: note,
-          },
-          onSizeChange: (width, height) => {
-            lobbyEl.style.height = Math.max(height, 700) + 'px';
-          },
-        });
-
-        // Force the Roam iframe to fill the container
-        setTimeout(() => {
-          const roamIframe = lobbyEl.querySelector('iframe');
-          if (roamIframe) {
-            roamIframe.style.width = '100%';
-            roamIframe.style.height = '100%';
-            roamIframe.style.minHeight = '700px';
-            roamIframe.style.border = 'none';
-            roamIframe.style.display = 'block';
-          }
-          lobbyEl.style.minHeight = '700px';
-        }, 500);
-      }
+      const iframe = document.createElement('iframe');
+      iframe.src = ROAM_URL;
+      iframe.title = 'Book a call';
+      iframe.allow = 'camera; microphone';
+      iframe.setAttribute('allowfullscreen', '');
+      lobbyEl.appendChild(iframe);
     }
   }
 

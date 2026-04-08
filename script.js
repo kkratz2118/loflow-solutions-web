@@ -82,6 +82,8 @@ function goToStep(step) {
 
     const lobbyEl = document.getElementById('roamLobby');
     if (lobbyEl) {
+      lobbyEl.innerHTML = '';
+
       const note = [
         data.company ? 'Company: ' + data.company : '',
         data.phone ? 'Phone: ' + data.phone : '',
@@ -89,39 +91,39 @@ function goToStep(step) {
         data.message ? 'Message: ' + data.message : '',
       ].filter(Boolean).join(' | ');
 
-      // Try Roam SDK embed first
+      const fullName = ((data.firstName || '') + ' ' + (data.lastName || '')).trim();
+
+      // Use Roam SDK embed with prefill
       if (typeof Roam !== 'undefined' && typeof Roam.initLobbyEmbed === 'function') {
-        lobbyEl.innerHTML = '';
         Roam.initLobbyEmbed({
           url: ROAM_URL,
           parentElement: lobbyEl,
           accentColor: '#1DE9B6',
           theme: 'light',
           prefill: {
-            name: ((data.firstName || '') + ' ' + (data.lastName || '')).trim(),
+            name: fullName,
             email: data.email || '',
             note: note,
           },
           onSizeChange: (width, height) => {
-            lobbyEl.style.height = Math.max(height, 500) + 'px';
+            lobbyEl.style.height = Math.max(height, 700) + 'px';
           },
         });
 
-        // If embed iframe is empty after 3s, fall back to direct iframe
+        // Force the Roam iframe to fill the container
         setTimeout(() => {
-          const embeddedIframe = lobbyEl.querySelector('iframe');
-          if (!embeddedIframe || !embeddedIframe.offsetHeight) {
-            loadDirectIframe(lobbyEl);
+          const roamIframe = lobbyEl.querySelector('iframe');
+          if (roamIframe) {
+            roamIframe.style.width = '100%';
+            roamIframe.style.height = '100%';
+            roamIframe.style.minHeight = '700px';
+            roamIframe.style.border = 'none';
+            roamIframe.style.display = 'block';
           }
-        }, 3000);
-      } else {
-        loadDirectIframe(lobbyEl);
+          lobbyEl.style.minHeight = '700px';
+        }, 500);
       }
     }
-  }
-
-  function loadDirectIframe(container) {
-    container.innerHTML = '<iframe src="' + ROAM_URL + '" style="width:100%;height:100%;min-height:600px;border:none;border-radius:8px;" title="Book a call"></iframe>';
   }
 
   // Toggle fullscreen for step 3

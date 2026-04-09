@@ -10,7 +10,12 @@ declare global {
         parentElement: HTMLElement;
         prefill?: { name?: string; email?: string; note?: string };
         theme?: 'dark' | 'light';
+        accentColor?: string;
         lobbyConfiguration?: 'default' | 'booking_only' | 'drop_in_button';
+        onSizeChange?: (width: number, height: number) => void;
+        onDateTimeSelected?: (lobby: unknown, payload: unknown) => void;
+        onProfileFormComplete?: (lobby: unknown, payload: unknown) => void;
+        onEventScheduled?: (lobby: unknown, payload: unknown) => void;
       }) => void;
     };
   }
@@ -31,6 +36,7 @@ function RoamEmbed({ firstName, lastName, email, company, phone, tool, message }
 
   useEffect(() => {
     if (initialized.current || !containerRef.current) return;
+    const el = containerRef.current;
 
     const noteParts: string[] = [];
     if (company) noteParts.push(`Company: ${company}`);
@@ -39,36 +45,53 @@ function RoamEmbed({ firstName, lastName, email, company, phone, tool, message }
     if (message) noteParts.push(`Message: ${message}`);
 
     const initEmbed = () => {
-      if (!window.Roam || !containerRef.current || initialized.current) return;
+      if (!window.Roam || !el || initialized.current) return;
       initialized.current = true;
       window.Roam.initLobbyEmbed({
         url: ROAM_URL,
-        parentElement: containerRef.current,
+        parentElement: el,
         prefill: {
           name: `${firstName} ${lastName}`.trim(),
           email,
           note: noteParts.join(' | '),
         },
         lobbyConfiguration: 'booking_only',
+        onSizeChange: (_width: number, height: number) => {
+          el.style.height = `${height}px`;
+        },
       });
     };
 
-    if (window.Roam) {
+    // Check if script already exists
+    const existingScript = document.querySelector('script[src="https://ro.am/lobbylinks/embed.js"]');
+    if (existingScript && window.Roam) {
       initEmbed();
-    } else {
+    } else if (!existingScript) {
       const script = document.createElement('script');
       script.src = 'https://ro.am/lobbylinks/embed.js';
       script.async = true;
-      script.onload = initEmbed;
+      script.onload = () => {
+        // Small delay to ensure Roam global is ready
+        setTimeout(initEmbed, 100);
+      };
       document.head.appendChild(script);
+    } else {
+      // Script exists but Roam not ready yet — poll briefly
+      const interval = setInterval(() => {
+        if (window.Roam) {
+          clearInterval(interval);
+          initEmbed();
+        }
+      }, 100);
+      return () => clearInterval(interval);
     }
   }, [firstName, lastName, email, company, phone, tool, message]);
 
   return (
     <div className="modal-step active" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <h3 style={{ fontFamily: 'var(--font)', fontSize: '1.1rem', margin: '0 0 12px', textAlign: 'center' }}>Pick a time, {firstName}!</h3>
-      <div className="modal-iframe-wrap" style={{ flex: 1 }}>
-        <div ref={containerRef} id="roam-lobby" style={{ width: '100%', height: '100%', minWidth: '320px' }} />
+      <div className="modal-iframe-wrap" style={{ flex: 1, overflow: 'auto' }}>
+        <div ref={containerRef} id="roam-lobby" style={{ width: '100%', minWidth: '320px' }} />
       </div>
     </div>
   );

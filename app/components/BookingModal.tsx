@@ -51,9 +51,7 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
     }
 
     if (nextStep === 3) {
-      const data = { firstName, lastName, email, company, phone, tool, message };
-      console.log('Booking form data:', data);
-      window.open(ROAM_URL, '_blank');
+      console.log('Booking form data:', { firstName, lastName, email, company, phone, tool, message });
     }
 
     setStep(nextStep);
@@ -129,15 +127,14 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
           )}
 
           {step === 3 && (
-            <div className="modal-step active">
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '60px 24px', gap: '20px' }}>
-                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#1DE9B6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                <h3 style={{ fontFamily: 'var(--font)', fontSize: '1.3rem', margin: 0 }}>You&apos;re all set, {firstName}!</h3>
-                <p style={{ color: 'var(--fg-muted)', fontSize: '0.9rem', maxWidth: '360px', margin: 0 }}>Your booking page just opened in a new tab. Pick a time that works and we&apos;ll take it from there.</p>
-                <a href={ROAM_URL} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ width: 'fit-content', marginTop: '8px' }}>
-                  OPEN BOOKING PAGE &rarr;
-                </a>
-              </div>
+            <div className="modal-step active" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+              <h3 style={{ fontFamily: 'var(--font)', fontSize: '1.1rem', margin: '0 0 12px', textAlign: 'center' }}>Pick a time, {firstName}!</h3>
+              <iframe
+                src={`${ROAM_URL}?name=${encodeURIComponent(firstName + ' ' + lastName)}&email=${encodeURIComponent(email)}${company ? '&company=' + encodeURIComponent(company) : ''}${phone ? '&phone=' + encodeURIComponent(phone) : ''}`}
+                style={{ flex: 1, width: '100%', minHeight: '450px', border: 'none', borderRadius: '8px' }}
+                title="Book a meeting"
+                allow="camera; microphone"
+              />
             </div>
           )}
         </div>

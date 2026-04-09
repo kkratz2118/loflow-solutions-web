@@ -1,12 +1,77 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
+
+declare global {
+  interface Window {
+    Roam?: {
+      initLobbyEmbed: (config: {
+        url: string;
+        parentElement: HTMLElement;
+        prefill?: { name?: string; email?: string; note?: string };
+        theme?: 'dark' | 'light';
+        lobbyConfiguration?: 'default' | 'booking_only' | 'drop_in_button';
+      }) => void;
+    };
+  }
+}
 
 const ROAM_URL = 'https://ro.am/loflow-solutions-llc/lobby-3/';
 
 interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
+}
+
+function RoamEmbed({ firstName, lastName, email, company, phone, tool, message }: {
+  firstName: string; lastName: string; email: string; company: string; phone: string; tool: string; message: string;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const initialized = useRef(false);
+
+  useEffect(() => {
+    if (initialized.current || !containerRef.current) return;
+
+    const noteParts: string[] = [];
+    if (company) noteParts.push(`Company: ${company}`);
+    if (phone) noteParts.push(`Phone: ${phone}`);
+    if (tool) noteParts.push(`Tool: ${tool}`);
+    if (message) noteParts.push(`Message: ${message}`);
+
+    const initEmbed = () => {
+      if (!window.Roam || !containerRef.current || initialized.current) return;
+      initialized.current = true;
+      window.Roam.initLobbyEmbed({
+        url: ROAM_URL,
+        parentElement: containerRef.current,
+        prefill: {
+          name: `${firstName} ${lastName}`.trim(),
+          email,
+          note: noteParts.join(' | '),
+        },
+        lobbyConfiguration: 'booking_only',
+      });
+    };
+
+    if (window.Roam) {
+      initEmbed();
+    } else {
+      const script = document.createElement('script');
+      script.src = 'https://ro.am/lobbylinks/embed.js';
+      script.async = true;
+      script.onload = initEmbed;
+      document.head.appendChild(script);
+    }
+  }, [firstName, lastName, email, company, phone, tool, message]);
+
+  return (
+    <div className="modal-step active" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <h3 style={{ fontFamily: 'var(--font)', fontSize: '1.1rem', margin: '0 0 12px', textAlign: 'center' }}>Pick a time, {firstName}!</h3>
+      <div className="modal-iframe-wrap" style={{ flex: 1 }}>
+        <div ref={containerRef} id="roam-lobby" style={{ width: '100%', height: '100%', minWidth: '320px' }} />
+      </div>
+    </div>
+  );
 }
 
 export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
@@ -144,17 +209,15 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
           )}
 
           {step === 3 && (
-            <div className="modal-step active" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-              <h3 style={{ fontFamily: 'var(--font)', fontSize: '1.1rem', margin: '0 0 12px', textAlign: 'center' }}>Pick a time, {firstName}!</h3>
-              <div className="modal-iframe-wrap" style={{ flex: 1 }}>
-                <iframe
-                  src={`${ROAM_URL}?name=${encodeURIComponent(firstName + ' ' + lastName)}&email=${encodeURIComponent(email)}${company ? '&company=' + encodeURIComponent(company) : ''}${phone ? '&phone=' + encodeURIComponent(phone) : ''}`}
-                  style={{ width: '100%', height: '100%', border: 'none', borderRadius: '8px' }}
-                  title="Book a meeting"
-                  allow="camera; microphone"
-                />
-              </div>
-            </div>
+            <RoamEmbed
+              firstName={firstName}
+              lastName={lastName}
+              email={email}
+              company={company}
+              phone={phone}
+              tool={tool}
+              message={message}
+            />
           )}
         </div>
       </div>

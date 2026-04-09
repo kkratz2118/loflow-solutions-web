@@ -90,7 +90,8 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   font-size: 1rem;
   color: var(--fg-muted);
   max-width: 520px;
-  margin-bottom: 32px;
+  margin: 0 auto 32px;
+  text-align: center;
 }
 
 .eyebrow {

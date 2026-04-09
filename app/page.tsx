@@ -21,16 +21,16 @@ export default function HomePage() {
         <section className="hero-section" id="hero">
           <div className="hero-bg"><div className="hero-gradient"></div></div>
           <div className="container">
-            <div className="text-center" style={{ maxWidth: '700px', margin: '0 auto' }}>
+            <div className="text-center" style={{ maxWidth: '900px', margin: '0 auto' }}>
                 <div className="badge-announcement">
                   <span className="badge-dot"></span>
                   YOUR MORTGAGE AUTOMATION PARTNER
                 </div>
-                <h1 className="heading-display">
+                <h1 className="heading-display" style={{ whiteSpace: 'nowrap' }}>
                   YOU DON&apos;T NEED MORE TOOLS.<br />YOU NEED <strong>BETTER SYSTEMS.</strong>
                 </h1>
-                <p className="subheadline">
-                  Custom-built mortgage automation that saves you time and actually drives revenue. No bloated CRMs, no monthly markups, no cookie-cutter templates.
+                <p className="subheadline" style={{ textAlign: 'center' }}>
+                  Custom-built mortgage automation that saves you time and actually drives revenue.<br />No bloated CRMs, no monthly markups, no cookie-cutter templates.
                 </p>
                 <div className="btn-group" style={{ justifyContent: 'center' }}>
                   <button className="btn-primary" onClick={() => setBookingOpen(true)}>

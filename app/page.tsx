@@ -30,7 +30,7 @@ export default function HomePage() {
                   YOU DON&apos;T NEED MORE TOOLS.<br />YOU NEED <strong>BETTER SYSTEMS.</strong>
                 </h1>
                 <p className="subheadline" style={{ textAlign: 'center' }}>
-                  Custom-built mortgage automation that saves you time and actually drives revenue.<br />No bloated CRMs, no monthly markups, no cookie-cutter templates.
+                  Custom-built mortgage automation that saves you time and actually drives revenue.
                 </p>
                 <div className="btn-group" style={{ justifyContent: 'center' }}>
                   <button className="btn-primary" onClick={() => setBookingOpen(true)}>

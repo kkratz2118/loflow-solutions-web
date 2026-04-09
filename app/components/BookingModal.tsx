@@ -63,14 +63,14 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
     <div className="booking-overlay open" onClick={(e) => {
       if ((e.target as HTMLElement).classList.contains('booking-overlay')) handleClose();
     }}>
-      <div className="booking-modal">
+      <div className="booking-modal" style={step === 3 ? { width: 'calc(100vw - 48px)', maxWidth: 'calc(100vw - 48px)', height: 'calc(100vh - 48px)', maxHeight: 'calc(100vh - 48px)', borderRadius: '12px' } : undefined}>
         <div className="modal-header">
           <span className="modal-progress">Step {step} of 3</span>
           <button className="modal-close" onClick={handleClose} aria-label="Close">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
         </div>
-        <div className="modal-body">
+        <div className="modal-body" style={step === 3 ? { flex: 1, display: 'flex', flexDirection: 'column' as const } : undefined}>
           {step === 1 && (
             <div className="modal-step active">
               <h3>Let&apos;s get started</h3>

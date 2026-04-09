@@ -37,8 +37,8 @@ export default function Carousel() {
     <section className="trusted-section">
       <div className="container">
         <div className="text-center">
-          <div className="section-tag">TRUSTED BY</div>
-          <p className="trusted-sub">Mortgage professionals and teams we proudly work with</p>
+          <div className="section-tag">TOOLS WE WORK WITH</div>
+          <p className="trusted-sub">Software and apps we integrate to streamline your workflow</p>
         </div>
         <div className="trusted-carousel">
           <button className="carousel-arrow carousel-prev" onClick={() => goToSlide(current - 1)} aria-label="Previous">

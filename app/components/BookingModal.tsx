@@ -1,100 +1,12 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
-
-declare global {
-  interface Window {
-    Roam?: {
-      initLobbyEmbed: (config: {
-        url: string;
-        parentElement: HTMLElement;
-        prefill?: { name?: string; email?: string; note?: string };
-        theme?: 'dark' | 'light';
-        accentColor?: string;
-        lobbyConfiguration?: 'default' | 'booking_only' | 'drop_in_button';
-        onSizeChange?: (width: number, height: number) => void;
-        onDateTimeSelected?: (lobby: unknown, payload: unknown) => void;
-        onProfileFormComplete?: (lobby: unknown, payload: unknown) => void;
-        onEventScheduled?: (lobby: unknown, payload: unknown) => void;
-      }) => void;
-    };
-  }
-}
+import { useState, useEffect, useCallback } from 'react';
 
 const ROAM_URL = 'https://ro.am/loflow-solutions-llc/lobby-3/';
 
 interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
-}
-
-function RoamEmbed({ firstName, lastName, email, company, phone, tool, message }: {
-  firstName: string; lastName: string; email: string; company: string; phone: string; tool: string; message: string;
-}) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const initialized = useRef(false);
-
-  useEffect(() => {
-    if (initialized.current || !containerRef.current) return;
-    const el = containerRef.current;
-
-    const noteParts: string[] = [];
-    if (company) noteParts.push(`Company: ${company}`);
-    if (phone) noteParts.push(`Phone: ${phone}`);
-    if (tool) noteParts.push(`Tool: ${tool}`);
-    if (message) noteParts.push(`Message: ${message}`);
-
-    const initEmbed = () => {
-      if (!window.Roam || !el || initialized.current) return;
-      initialized.current = true;
-      window.Roam.initLobbyEmbed({
-        url: ROAM_URL,
-        parentElement: el,
-        prefill: {
-          name: `${firstName} ${lastName}`.trim(),
-          email,
-          note: noteParts.join(' | '),
-        },
-        lobbyConfiguration: 'booking_only',
-        onSizeChange: (_width: number, height: number) => {
-          el.style.height = `${height}px`;
-        },
-      });
-    };
-
-    // Check if script already exists
-    const existingScript = document.querySelector('script[src="https://ro.am/lobbylinks/embed.js"]');
-    if (existingScript && window.Roam) {
-      initEmbed();
-    } else if (!existingScript) {
-      const script = document.createElement('script');
-      script.src = 'https://ro.am/lobbylinks/embed.js';
-      script.async = true;
-      script.onload = () => {
-        // Small delay to ensure Roam global is ready
-        setTimeout(initEmbed, 100);
-      };
-      document.head.appendChild(script);
-    } else {
-      // Script exists but Roam not ready yet — poll briefly
-      const interval = setInterval(() => {
-        if (window.Roam) {
-          clearInterval(interval);
-          initEmbed();
-        }
-      }, 100);
-      return () => clearInterval(interval);
-    }
-  }, [firstName, lastName, email, company, phone, tool, message]);
-
-  return (
-    <div className="modal-step active" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <h3 style={{ fontFamily: 'var(--font)', fontSize: '1.1rem', margin: '0 0 12px', textAlign: 'center' }}>Pick a time, {firstName}!</h3>
-      <div className="modal-iframe-wrap" style={{ flex: 1, overflow: 'auto' }}>
-        <div ref={containerRef} id="roam-lobby" style={{ width: '100%', minWidth: '320px' }} />
-      </div>
-    </div>
-  );
 }
 
 export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
@@ -106,7 +18,6 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
   const [phone, setPhone] = useState('');
   const [tool, setTool] = useState('');
   const [message, setMessage] = useState('');
-  const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   const handleClose = useCallback(() => {
     onClose();
@@ -140,10 +51,6 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
     }
 
     if (nextStep === 3) {
-      if (!agreedToTerms) {
-        alert('Please agree to the terms before continuing.');
-        return;
-      }
       console.log('Booking form data:', { firstName, lastName, email, company, phone, tool, message });
     }
 
@@ -212,35 +119,25 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
                 <label className="form-label" htmlFor="bookingMessage">What are you looking for help with?</label>
                 <textarea className="form-textarea" id="bookingMessage" placeholder="Tell us what you're interested in..." style={{ minHeight: '80px' }} value={message} onChange={e => setMessage(e.target.value)} />
               </div>
-              <div className="form-group" style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginTop: '8px' }}>
-                <input
-                  type="checkbox"
-                  id="agreeTerms"
-                  checked={agreedToTerms}
-                  onChange={e => setAgreedToTerms(e.target.checked)}
-                  style={{ marginTop: '4px', accentColor: 'var(--accent)' }}
-                />
-                <label htmlFor="agreeTerms" style={{ fontSize: '0.8rem', color: 'var(--fg-muted)', cursor: 'pointer', lineHeight: '1.4' }}>
-                  I agree to the <a href="/terms" target="_blank" rel="noopener" style={{ color: 'var(--accent)', textDecoration: 'underline' }}>Terms of Service</a> and <a href="/privacy" target="_blank" rel="noopener" style={{ color: 'var(--accent)', textDecoration: 'underline' }}>Privacy Policy</a>
-                </label>
-              </div>
               <div className="modal-nav">
                 <button className="modal-btn-back" onClick={() => goToStep(1)}>Back</button>
-                <button className="modal-btn-next" onClick={() => goToStep(3)} disabled={!agreedToTerms} style={{ opacity: agreedToTerms ? 1 : 0.5, cursor: agreedToTerms ? 'pointer' : 'not-allowed' }}>Connect Me!</button>
+                <button className="modal-btn-next" onClick={() => goToStep(3)}>Connect Me!</button>
               </div>
             </div>
           )}
 
           {step === 3 && (
-            <RoamEmbed
-              firstName={firstName}
-              lastName={lastName}
-              email={email}
-              company={company}
-              phone={phone}
-              tool={tool}
-              message={message}
-            />
+            <div className="modal-step active" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+              <h3 style={{ fontFamily: 'var(--font)', fontSize: '1.1rem', margin: '0 0 12px', textAlign: 'center' }}>Pick a time, {firstName}!</h3>
+              <div className="modal-iframe-wrap" style={{ flex: 1 }}>
+                <iframe
+                  src={`${ROAM_URL}?name=${encodeURIComponent(firstName + ' ' + lastName)}&email=${encodeURIComponent(email)}${company ? '&company=' + encodeURIComponent(company) : ''}${phone ? '&phone=' + encodeURIComponent(phone) : ''}`}
+                  style={{ width: '100%', height: '100%', border: 'none', borderRadius: '8px' }}
+                  title="Book a meeting"
+                  allow="camera; microphone"
+                />
+              </div>
+            </div>
           )}
         </div>
       </div>

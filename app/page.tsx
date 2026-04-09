@@ -21,8 +21,7 @@ export default function HomePage() {
         <section className="hero-section" id="hero">
           <div className="hero-bg"><div className="hero-gradient"></div></div>
           <div className="container">
-            <div className="grid-2">
-              <div style={{ maxWidth: '520px' }}>
+            <div className="text-center" style={{ maxWidth: '700px', margin: '0 auto' }}>
                 <div className="badge-announcement">
                   <span className="badge-dot"></span>
                   YOUR MORTGAGE AUTOMATION PARTNER
@@ -33,59 +32,12 @@ export default function HomePage() {
                 <p className="subheadline">
                   Custom-built mortgage automation that saves you time and actually drives revenue. No bloated CRMs, no monthly markups, no cookie-cutter templates.
                 </p>
-                <div className="btn-group">
+                <div className="btn-group" style={{ justifyContent: 'center' }}>
                   <button className="btn-primary" onClick={() => setBookingOpen(true)}>
                     BOOK A FREE CALL &rarr;
                   </button>
                   <a href="#services" className="btn-secondary">LEARN MORE</a>
                 </div>
-              </div>
-
-              {/* Pipeline Widget */}
-              <div>
-                <div className="widget">
-                  <div className="widget-header">
-                    <div className="widget-title">
-                      <span>PIPELINE OVERVIEW</span>
-                      <span className="live-dot"></span>
-                      <span style={{ color: '#1DE9B6', fontSize: '0.6rem' }}>LIVE</span>
-                    </div>
-                    <div className="widget-tabs">
-                      <button className="widget-tab">DAILY</button>
-                      <button className="widget-tab active">WEEKLY</button>
-                      <button className="widget-tab">MONTHLY</button>
-                    </div>
-                  </div>
-                  <div className="widget-big-number">$24.8M</div>
-                  <div className="widget-trend">&#8599; 12.4% from last month</div>
-                  <div className="widget-grid">
-                    <div className="widget-card">
-                      <div className="widget-card-title">FUNDED VOLUME</div>
-                      <div className="widget-card-value">$12.4M</div>
-                      <div className="widget-card-delta">&#8599; +18.2%</div>
-                      <div className="sparkline"></div>
-                    </div>
-                    <div className="widget-card">
-                      <div className="widget-card-title">STUCK LOANS</div>
-                      <div className="widget-card-value">8</div>
-                      <div className="widget-card-delta">&#8600; -3 this week</div>
-                      <div className="sparkline"></div>
-                    </div>
-                    <div className="widget-card">
-                      <div className="widget-card-title">APPS THIS WEEK</div>
-                      <div className="widget-card-value">24</div>
-                      <div className="widget-card-delta">&#8599; +6 vs last week</div>
-                      <div className="sparkline"></div>
-                    </div>
-                    <div className="widget-card">
-                      <div className="widget-card-title">AVG CYCLE TIME</div>
-                      <div className="widget-card-value">32d</div>
-                      <div className="widget-card-delta">&#9201; -4d improvement</div>
-                      <div className="sparkline"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </section>

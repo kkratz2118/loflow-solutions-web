@@ -18,6 +18,7 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
   const [phone, setPhone] = useState('');
   const [tool, setTool] = useState('');
   const [message, setMessage] = useState('');
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   const handleClose = useCallback(() => {
     onClose();
@@ -51,6 +52,10 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
     }
 
     if (nextStep === 3) {
+      if (!agreedToTerms) {
+        alert('Please agree to the terms before continuing.');
+        return;
+      }
       console.log('Booking form data:', { firstName, lastName, email, company, phone, tool, message });
     }
 
@@ -119,9 +124,21 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
                 <label className="form-label" htmlFor="bookingMessage">What are you looking for help with?</label>
                 <textarea className="form-textarea" id="bookingMessage" placeholder="Tell us what you're interested in..." style={{ minHeight: '80px' }} value={message} onChange={e => setMessage(e.target.value)} />
               </div>
+              <div className="form-group" style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginTop: '8px' }}>
+                <input
+                  type="checkbox"
+                  id="agreeTerms"
+                  checked={agreedToTerms}
+                  onChange={e => setAgreedToTerms(e.target.checked)}
+                  style={{ marginTop: '4px', accentColor: 'var(--accent)' }}
+                />
+                <label htmlFor="agreeTerms" style={{ fontSize: '0.8rem', color: 'var(--fg-muted)', cursor: 'pointer', lineHeight: '1.4' }}>
+                  I agree to the <a href="/terms" target="_blank" rel="noopener" style={{ color: 'var(--accent)', textDecoration: 'underline' }}>Terms of Service</a> and <a href="/privacy" target="_blank" rel="noopener" style={{ color: 'var(--accent)', textDecoration: 'underline' }}>Privacy Policy</a>
+                </label>
+              </div>
               <div className="modal-nav">
                 <button className="modal-btn-back" onClick={() => goToStep(1)}>Back</button>
-                <button className="modal-btn-next" onClick={() => goToStep(3)}>Connect Me!</button>
+                <button className="modal-btn-next" onClick={() => goToStep(3)} disabled={!agreedToTerms} style={{ opacity: agreedToTerms ? 1 : 0.5, cursor: agreedToTerms ? 'pointer' : 'not-allowed' }}>Connect Me!</button>
               </div>
             </div>
           )}

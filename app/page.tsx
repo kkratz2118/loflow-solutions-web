@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import Image from 'next/image';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import BookingModal from './components/BookingModal';
@@ -63,13 +62,13 @@ export default function HomePage() {
         <section className="hero-section" id="hero">
           <div className="hero-bg"><div className="hero-gradient"></div></div>
           <div className="container">
-            <div className="text-center" style={{ maxWidth: '900px', margin: '0 auto' }}>
+            <div className="text-center hero-content">
                 <div className="badge-announcement">
                   <span className="badge-dot"></span>
                   YOUR MORTGAGE AUTOMATION PARTNER
                 </div>
-                <h1 className="heading-display" style={{ whiteSpace: 'nowrap' }}>
-                  YOU DON&apos;T NEED MORE TOOLS.<br />YOU NEED <strong>BETTER SYSTEMS.</strong>
+                <h1 className="heading-display">
+                  YOU DON&apos;T NEED MORE TOOLS.<br className="hero-br" />YOU NEED <strong>BETTER SYSTEMS.</strong>
                 </h1>
                 <p className="subheadline" style={{ textAlign: 'center' }}>
                   Custom-built mortgage automation that saves you time and actually drives revenue.
@@ -81,6 +80,15 @@ export default function HomePage() {
                   <a href="#services" className="btn-secondary">LEARN MORE</a>
                 </div>
             </div>
+            <div className="carousel-desktop">
+              <Carousel />
+            </div>
+          </div>
+        </section>
+
+        {/* TRUSTED TOOLS — mobile only */}
+        <section className="carousel-mobile">
+          <div className="container">
             <Carousel />
           </div>
         </section>

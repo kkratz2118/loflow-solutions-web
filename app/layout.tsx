@@ -9,13 +9,13 @@ export const metadata: Metadata = {
     type: 'website',
     title: 'LOFlow Solutions - Custom CRM Systems for Mortgage Professionals',
     description: 'Custom CRM systems for mortgage professionals. LOFlow builds, customizes & supports CRM solutions for loan officers, brokers & mortgage branches.',
-    images: ['https://framerusercontent.com/images/KpbhecEzWQ4dFSutqcW3lQOGNk.png'],
+    images: ['https://loflowsolutions.com/images/preview.image-url.png'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'LOFlow Solutions - Custom CRM Systems for Mortgage Professionals',
     description: 'Custom CRM systems for mortgage professionals. LOFlow builds, customizes & supports CRM solutions for loan officers, brokers & mortgage branches.',
-    images: ['https://framerusercontent.com/images/KpbhecEzWQ4dFSutqcW3lQOGNk.png'],
+    images: ['https://loflowsolutions.com/images/preview.image-url.png'],
   },
   icons: {
     icon: '/images/loflow-favicon.png',

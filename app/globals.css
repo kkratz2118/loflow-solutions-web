@@ -28,15 +28,18 @@
   --max-w: 1152px;
 }
 
-html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; width: 100%; }
+html { font-size: 16px; overflow-x: hidden; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
 
 body {
   font-family: var(--font-sans);
   background: var(--bg);
   color: var(--fg);
   line-height: 1.6;
-  overflow-x: hidden;
-  width: 100%;
+  -webkit-overflow-scrolling: touch;
 }
 
 

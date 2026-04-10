@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, Fragment } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -11,11 +11,53 @@ import ScrollAnimations from './components/ScrollAnimations';
 
 export default function HomePage() {
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [serviceIdx, setServiceIdx] = useState(0);
+  const serviceCards = [
+    {
+      badges: ['Clear to Close Update', 'Loaniversary Reminder', 'Referral Follow-Up'],
+      icon: null,
+      title: 'Done-For-You CRM Setup',
+      desc: 'We handle the heavy lifting — full onboarding, workflow configuration, and mortgage-specific automation so you can focus on closing loans, not managing tech.',
+    },
+    {
+      badges: null,
+      icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><path d="M18 9l-5-5-4 4-3-3"/></svg>,
+      title: 'Mortgage-Specific Workflows',
+      desc: 'Annual review sequences, referral pipelines, post-close follow-up, and lead routing systems built for how top LOs actually work — not generic templates.',
+    },
+    {
+      badges: null,
+      icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>,
+      title: 'Pipeline Intelligence',
+      desc: 'Know exactly where every lead stands with real-time data insights. No more guessing about your pipeline health or missing follow-up opportunities.',
+    },
+    {
+      badges: null,
+      icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>,
+      title: 'Custom Integrations',
+      desc: 'Seamlessly connect your LOS, dialer, and other tools without the hassle. We build the bridges so your systems actually talk to each other.',
+    },
+    {
+      badges: null,
+      icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>,
+      title: 'Ongoing CRM Support',
+      desc: 'Get expert guidance to optimize your system as your business grows. Optional support retainer keeps your CRM running smoothly and profitably.',
+    },
+  ];
+
+  const nextService = useCallback(() => {
+    setServiceIdx(prev => (prev + 1) % serviceCards.length);
+  }, [serviceCards.length]);
+
+  useEffect(() => {
+    const timer = setInterval(nextService, 8000);
+    return () => clearInterval(timer);
+  }, [nextService]);
 
   return (
     <>
       <Header onOpenBooking={() => setBookingOpen(true)} />
-      <main style={{ paddingTop: '72px' }}>
+      <main className="main-content">
 
         {/* HERO */}
         <section className="hero-section" id="hero">
@@ -39,286 +81,12 @@ export default function HomePage() {
                   <a href="#services" className="btn-secondary">LEARN MORE</a>
                 </div>
             </div>
-          </div>
-        </section>
-
-        {/* TRUSTED BY */}
-        <Carousel />
-
-        {/* BENEFITS */}
-        <section id="benefits" className="section-pad">
-          <div className="container">
-            <div className="text-center mb-12">
-              <div className="section-tag">BENEFITS</div>
-              <h2 className="heading-section">Everything You Need. Nothing You Don&apos;t.</h2>
-            </div>
-            <div className="grid-4">
-              <div className="card">
-                <div className="card-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                </div>
-                <div className="heading-card">Real-Time Intelligence</div>
-                <p style={{ fontSize: '0.8rem', color: 'var(--fg-muted)' }}>Access accurate, real-time data to drive smarter decisions. Get instant visibility into your mortgage pipeline.</p>
-              </div>
-              <div className="card">
-                <div className="card-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-                </div>
-                <div className="heading-card">Measurable Impact</div>
-                <p style={{ fontSize: '0.8rem', color: 'var(--fg-muted)' }}>Track performance, uncover insights, and achieve data-backed growth. See exactly how your CRM drives revenue.</p>
-              </div>
-              <div className="card">
-                <div className="card-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                </div>
-                <div className="heading-card">Seamless Integration</div>
-                <p style={{ fontSize: '0.8rem', color: 'var(--fg-muted)' }}>Connect tools, teams, and workflows with intelligent automation. Your CRM plays nice with your LOS and dialer.</p>
-              </div>
-              <div className="card">
-                <div className="card-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                </div>
-                <div className="heading-card">Pipeline Intelligence</div>
-                <p style={{ fontSize: '0.8rem', color: 'var(--fg-muted)' }}>Know exactly where every lead stands with real-time data insights. No more guessing about pipeline health.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FEATURE #1 — Pipeline Search */}
-        <section className="bg-muted section-pad">
-          <div className="container">
-            <div className="feature-detail">
-              <div>
-                <div className="eyebrow">Pipeline Intelligence</div>
-                <h2 className="heading-section" style={{ textTransform: 'none', fontFamily: 'var(--font)' }}>Know Where Every<br />Loan Stands</h2>
-                <p className="subheadline" style={{ marginBottom: 0 }}>Search by name, loan number, or status. LOFlow gives you instant visibility into your pipeline so nothing falls through the cracks.</p>
-              </div>
-              <div>
-                <div className="demo-panel">
-                  <div className="demo-panel-header">Pipeline search &mdash; 3 results</div>
-                  <table className="demo-table">
-                    <thead>
-                      <tr><th>Borrower</th><th>Status</th><th>Stage</th></tr>
-                    </thead>
-                    <tbody>
-                      <tr><td>John Smith</td><td>Application Sent</td><td>In Progress</td></tr>
-                      <tr><td>Tabitha Centry</td><td>Clear to Close</td><td>CTC</td></tr>
-                      <tr><td>Brandon Cotter</td><td>Submitted to UW</td><td>Underwriting</td></tr>
-                    </tbody>
-                  </table>
-                  <p className="demo-caption">Real-time pipeline data &middot; Always up to date</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FEATURE #2 — Real-Time Metrics */}
-        <section className="section-pad">
-          <div className="container">
-            <div className="feature-detail reverse">
-              <div>
-                <div className="eyebrow">Real-Time Metrics</div>
-                <h2 className="heading-section" style={{ textTransform: 'none', fontFamily: 'var(--font)' }}>Your Pipeline<br />at a Glance</h2>
-                <p className="subheadline" style={{ marginBottom: 0 }}>Metrics that actually matter to your mortgage business. Click any number to drill into the underlying data.</p>
-              </div>
-              <div>
-                <div className="metrics-grid">
-                  <div className="metric-card">
-                    <div className="metric-title">FUNDED VOLUME</div>
-                    <div className="metric-value">$12.4M</div>
-                    <div className="metric-delta">&#8599; +18.2%</div>
-                    <div className="sparkline" style={{ marginTop: '12px' }}></div>
-                  </div>
-                  <div className="metric-card">
-                    <div className="metric-title">STUCK LOANS</div>
-                    <div className="metric-value">8</div>
-                    <div className="metric-delta">&#8600; -3 this week</div>
-                    <div className="sparkline" style={{ marginTop: '12px' }}></div>
-                  </div>
-                  <div className="metric-card">
-                    <div className="metric-title">APPS THIS WEEK</div>
-                    <div className="metric-value">24</div>
-                    <div className="metric-delta">&#8599; +6 vs last week</div>
-                    <div className="sparkline" style={{ marginTop: '12px' }}></div>
-                  </div>
-                  <div className="metric-card">
-                    <div className="metric-title">AVG CYCLE TIME</div>
-                    <div className="metric-value">32d</div>
-                    <div className="metric-delta">&#9201; -4d improvement</div>
-                    <div className="sparkline" style={{ marginTop: '12px' }}></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FEATURE #3 — Kanban */}
-        <section className="bg-muted section-pad">
-          <div className="container">
-            <div className="text-center mb-12">
-              <div className="eyebrow">Workflow Management</div>
-              <h2 className="heading-section">See Your Deals Move Through The Pipeline</h2>
-            </div>
-            <div className="kanban">
-              <div className="kanban-col">
-                <div className="kanban-col-title">Application</div>
-                <div className="kanban-card">
-                  <div className="kanban-card-name">John Smith</div>
-                  <div className="kanban-card-meta">Application Sent &middot; $485K VA</div>
-                </div>
-                <div className="kanban-card">
-                  <div className="kanban-card-name">Davis, K.</div>
-                  <div className="kanban-card-meta">Qualification &middot; $478K Conv</div>
-                </div>
-              </div>
-              <div className="kanban-col">
-                <div className="kanban-col-title">Underwriting</div>
-                <div className="kanban-card">
-                  <div className="kanban-card-name">Brandon Cotter</div>
-                  <div className="kanban-card-meta">Submitted to UW &middot; $612K FHA</div>
-                </div>
-                <div className="kanban-card">
-                  <div className="kanban-card-name">Chen, M.</div>
-                  <div className="kanban-card-meta">Locked &middot; $550K VA</div>
-                </div>
-              </div>
-              <div className="kanban-col">
-                <div className="kanban-col-title">Clear to Close</div>
-                <div className="kanban-card">
-                  <div className="kanban-card-name">Tabitha Centry</div>
-                  <div className="kanban-card-meta">CTC &middot; $425K Conv</div>
-                </div>
-                <div className="kanban-card">
-                  <div className="kanban-card-name">Martinez, A.</div>
-                  <div className="kanban-card-meta">Docs Out &middot; $510K VA</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SERVICES */}
-        <section id="services" className="section-pad">
-          <div className="container">
-            <div className="text-center mb-12">
-              <div className="section-tag">SERVICES</div>
-              <h2 className="heading-section">Mortgage Automation, <span className="highlight">Built for You</span></h2>
-              <p className="section-sub" style={{ margin: '0 auto 32px' }}>Everything top-producing LOs need to streamline follow-up, capture referrals, and close more loans.</p>
-            </div>
-            <div className="services-grid">
-              <div className="service-card">
-                <div className="service-tag-row">
-                  <span className="service-badge">Clear to Close Update</span>
-                  <span className="service-badge">Loaniversary Reminder</span>
-                  <span className="service-badge">Referral Follow-Up</span>
-                </div>
-                <div className="service-title">Done-For-You CRM Setup</div>
-                <p className="service-desc">We handle the heavy lifting — full onboarding, workflow configuration, and mortgage-specific automation so you can focus on closing loans, not managing tech.</p>
-              </div>
-              <div className="service-card">
-                <div className="card-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><path d="M18 9l-5-5-4 4-3-3"/></svg>
-                </div>
-                <div className="service-title">Mortgage-Specific Workflows</div>
-                <p className="service-desc">Annual review sequences, referral pipelines, post-close follow-up, and lead routing systems built for how top LOs actually work — not generic templates.</p>
-              </div>
-              <div className="service-card">
-                <div className="card-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                </div>
-                <div className="service-title">Pipeline Intelligence</div>
-                <p className="service-desc">Know exactly where every lead stands with real-time data insights. No more guessing about your pipeline health or missing follow-up opportunities.</p>
-              </div>
-              <div className="service-card">
-                <div className="card-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                </div>
-                <div className="service-title">Custom Integrations</div>
-                <p className="service-desc">Seamlessly connect your LOS, dialer, and other tools without the hassle. We build the bridges so your systems actually talk to each other.</p>
-              </div>
-              <div className="service-card">
-                <div className="card-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                </div>
-                <div className="service-title">Ongoing CRM Support</div>
-                <p className="service-desc">Get expert guidance to optimize your system as your business grows. Optional support retainer keeps your CRM running smoothly and profitably.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FEATURES */}
-        <section id="features" className="bg-muted section-pad">
-          <div className="container">
-            <div className="text-center mb-12">
-              <div className="section-tag">FEATURES</div>
-              <h2 className="heading-section">Everything You Need <span className="highlight">In One Place</span></h2>
-              <p className="section-sub" style={{ margin: '0 auto 32px' }}>Built specifically for mortgage professionals who demand control, not cookie-cutter solutions.</p>
-            </div>
-            <div className="features-grid">
-              <div className="feature-item">
-                <div className="feature-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><path d="M18 9l-5-5-4 4-3-3"/></svg>
-                </div>
-                <div>
-                  <h4 className="feature-title">Annual Review Automation</h4>
-                  <p className="feature-desc">Automatically nurture past clients with personalized mortgage review sequences. Never miss a refi opportunity again.</p>
-                </div>
-              </div>
-              <div className="feature-item">
-                <div className="feature-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                </div>
-                <div>
-                  <h4 className="feature-title">Referral Pipeline Management</h4>
-                  <p className="feature-desc">Build and maintain realtor relationships with automated follow-up systems designed to generate consistent referral flow.</p>
-                </div>
-              </div>
-              <div className="feature-item">
-                <div className="feature-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                </div>
-                <div>
-                  <h4 className="feature-title">Post-Close Follow-Up</h4>
-                  <p className="feature-desc">Keep clients engaged after closing with evergreen sequences that drive reviews, referrals, and repeat business.</p>
-                </div>
-              </div>
-              <div className="feature-item">
-                <div className="feature-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
-                </div>
-                <div>
-                  <h4 className="feature-title">Lead Routing &amp; Management</h4>
-                  <p className="feature-desc">Instantly capture and route inbound leads while automating outbound follow-up. No lead falls through the cracks.</p>
-                </div>
-              </div>
-              <div className="feature-item">
-                <div className="feature-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                </div>
-                <div>
-                  <h4 className="feature-title">Pipeline Intelligence</h4>
-                  <p className="feature-desc">Track loan progress in real-time with dashboards that show exactly where your business stands — no guessing.</p>
-                </div>
-              </div>
-              <div className="feature-item">
-                <div className="feature-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                </div>
-                <div>
-                  <h4 className="feature-title">LOS Integration</h4>
-                  <p className="feature-desc">Connect seamlessly with ARIVE, LendingPad, and other mortgage systems. Your CRM works with your existing stack.</p>
-                </div>
-              </div>
-            </div>
+            <Carousel />
           </div>
         </section>
 
         {/* HOW IT WORKS */}
-        <section id="how-it-works" className="section-pad">
+        <section id="how-it-works" className="section-pad" style={{ paddingTop: '40px' }}>
           <div className="container">
             <div className="text-center mb-12">
               <div className="section-tag">PROCESS</div>
@@ -345,41 +113,242 @@ export default function HomePage() {
           </div>
         </section>
 
+
+
+        {/* PIPELINE MANAGEMENT */}
+        <section className="bg-muted section-pad">
+          <div className="container">
+            <div className="text-center mb-12">
+              <div className="section-tag">PIPELINE MANAGEMENT</div>
+              <h2 className="heading-section">One Pipeline. <span className="highlight">Every Tool Connected.</span></h2>
+              <p className="section-sub" style={{ margin: '0 auto 32px' }}>Your CRM, LOS, dialer, and email all feeding into a single view. No more switching tabs or losing leads between systems.</p>
+            </div>
+
+            <div className="pipeline-stat-banner">
+              <div className="pipeline-stat">
+                <span className="pipeline-stat-value card-stat-value" data-target={27} data-suffix="%">0%</span>
+                <span className="pipeline-stat-label">more loans closed when your systems are properly connected</span>
+              </div>
+            </div>
+
+            <div className="kanban">
+              <div className="kanban-col">
+                <div className="kanban-col-title">
+                  <span>New Lead</span>
+                  <span className="kanban-col-count">3</span>
+                </div>
+                <div className="kanban-card">
+                  <div className="kanban-card-source source-crm">CRM</div>
+                  <div className="kanban-card-name">John Smith</div>
+                  <div className="kanban-card-meta">Inbound &middot; $485K VA</div>
+                  <div className="kanban-card-tools">
+                    <span className="kanban-tool" title="Auto-dialer queued">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4a2 2 0 0 1 1.99-2.18H6.6a2 2 0 0 1 2 1.72c.13.88.37 1.81.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.27-1.27a2 2 0 0 1 2.11-.45c1 .33 1.93.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </span>
+                    <span className="kanban-tool" title="Email drip active">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </span>
+                  </div>
+                </div>
+                <div className="kanban-card">
+                  <div className="kanban-card-source source-los">LOS</div>
+                  <div className="kanban-card-name">Davis, K.</div>
+                  <div className="kanban-card-meta">Pre-Qual &middot; $478K Conv</div>
+                  <div className="kanban-card-tools">
+                    <span className="kanban-tool" title="LOS synced">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </span>
+                  </div>
+                </div>
+                <div className="kanban-card">
+                  <div className="kanban-card-source source-web">Web</div>
+                  <div className="kanban-card-name">Patel, R.</div>
+                  <div className="kanban-card-meta">Website Form &middot; $320K FHA</div>
+                  <div className="kanban-card-tools">
+                    <span className="kanban-tool" title="Auto-assigned">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="kanban-col-arrow">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+
+              <div className="kanban-col">
+                <div className="kanban-col-title">
+                  <span>In Progress</span>
+                  <span className="kanban-col-count">2</span>
+                </div>
+                <div className="kanban-card">
+                  <div className="kanban-card-source source-los">LOS</div>
+                  <div className="kanban-card-name">Brandon Cotter</div>
+                  <div className="kanban-card-meta">Submitted to UW &middot; $612K FHA</div>
+                  <div className="kanban-card-tools">
+                    <span className="kanban-tool" title="LOS synced">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </span>
+                    <span className="kanban-tool" title="Status update sent">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </span>
+                  </div>
+                </div>
+                <div className="kanban-card">
+                  <div className="kanban-card-source source-crm">CRM</div>
+                  <div className="kanban-card-name">Chen, M.</div>
+                  <div className="kanban-card-meta">Rate Locked &middot; $550K VA</div>
+                  <div className="kanban-card-tools">
+                    <span className="kanban-tool" title="Dialer follow-up">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4a2 2 0 0 1 1.99-2.18H6.6a2 2 0 0 1 2 1.72c.13.88.37 1.81.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.27-1.27a2 2 0 0 1 2.11-.45c1 .33 1.93.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="kanban-col-arrow">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+
+              <div className="kanban-col">
+                <div className="kanban-col-title">
+                  <span>Clear to Close</span>
+                  <span className="kanban-col-count">2</span>
+                </div>
+                <div className="kanban-card">
+                  <div className="kanban-card-source source-los">LOS</div>
+                  <div className="kanban-card-name">Tabitha Centry</div>
+                  <div className="kanban-card-meta">CTC &middot; $425K Conv</div>
+                  <div className="kanban-card-tools">
+                    <span className="kanban-tool" title="Closing docs sent">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    </span>
+                    <span className="kanban-tool" title="Celebration email queued">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </span>
+                  </div>
+                </div>
+                <div className="kanban-card">
+                  <div className="kanban-card-source source-crm">CRM</div>
+                  <div className="kanban-card-name">Martinez, A.</div>
+                  <div className="kanban-card-meta">Docs Out &middot; $510K VA</div>
+                  <div className="kanban-card-tools">
+                    <span className="kanban-tool" title="Post-close drip ready">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SERVICES */}
+        <section id="services" className="section-pad">
+          <div className="container">
+            <div className="text-center mb-12">
+              <div className="section-tag">SERVICES</div>
+              <h2 className="heading-section">Mortgage Automation, <span className="highlight">Built for You</span></h2>
+              <p className="section-sub" style={{ margin: '0 auto 32px' }}>Everything top-producing LOs need to streamline follow-up, capture referrals, and close more loans.</p>
+            </div>
+            <div className="services-carousel">
+              <button className="services-arrow services-prev" onClick={() => setServiceIdx((serviceIdx - 1 + serviceCards.length) % serviceCards.length)} aria-label="Previous">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <div className="services-track-wrapper">
+                {serviceCards.map((card, i) => {
+                  const offset = ((i - serviceIdx) % serviceCards.length + serviceCards.length) % serviceCards.length;
+                  const pos = offset > Math.floor(serviceCards.length / 2) ? offset - serviceCards.length : offset;
+                  const isCenter = pos === 0;
+                  const isVisible = Math.abs(pos) <= 1;
+                  if (!isVisible) return null;
+                  return (
+                    <div
+                      className={`service-card sc-pos-${pos}`}
+                      key={i}
+                      style={{
+                        transform: `translateX(${pos * 105}%) scale(${isCenter ? 1 : 0.88})`,
+                        opacity: isCenter ? 1 : 0.5,
+                        filter: isCenter ? 'none' : 'blur(2px)',
+                        zIndex: isCenter ? 2 : 1,
+                      }}
+                    >
+                      {card.badges ? (
+                        <div className="service-tag-row">
+                          {card.badges.map((b, j) => <span className="service-badge" key={j}>{b}</span>)}
+                        </div>
+                      ) : (
+                        <div className="card-icon">{card.icon}</div>
+                      )}
+                      <div className="service-title">{card.title}</div>
+                      <p className="service-desc">{card.desc}</p>
+                    </div>
+                  );
+                })}
+              </div>
+              <button className="services-arrow services-next" onClick={() => setServiceIdx((serviceIdx + 1) % serviceCards.length)} aria-label="Next">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+            <div className="services-dots">
+              {serviceCards.map((_, i) => (
+                <button key={i} className={`services-dot${i === serviceIdx ? ' active' : ''}`} onClick={() => setServiceIdx(i)} aria-label={`Go to slide ${i + 1}`} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+
         {/* INTEGRATIONS */}
         <section className="bg-muted section-pad" id="integrations">
           <div className="container">
-            <div className="text-center mb-8">
-              <div className="section-tag">INTEGRATIONS</div>
-              <h2 className="heading-section"><span className="highlight">Seamless</span> Integrations</h2>
-              <p className="integrations-quote">&ldquo;Our automations plug into your stack to create a unified, intelligent workflow&rdquo;</p>
-            </div>
-            <div className="integrations-marquee-wrap">
-              <div className="integrations-track">
-                {[...Array(2)].map((_, setIdx) => (
-                  <Fragment key={setIdx}>
-                    <div className="integration-logo">
-                      <Image src="https://framerusercontent.com/images/5rVfhRpaT4VTcXV85kG3LS09lXQ.png" alt="Integration logo" width={36} height={36} />
-                    </div>
-                    <div className="integration-logo">
-                      <svg viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4a2 2 0 0 1 1.99-2.18H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    </div>
-                    <div className="integration-logo">
-                      <svg viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                    </div>
-                    <div className="integration-logo">
-                      <svg viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-                    </div>
-                    <div className="integration-logo">
-                      <svg viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    </div>
-                    <div className="integration-logo">
-                      <svg viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                    </div>
-                    <div className="integration-logo">
-                      <svg viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                    </div>
-                  </Fragment>
+            <div className="integrations-orbit-container">
+              <div className="integrations-orbit-ring">
+                {[
+                  /* Zap / Automation */
+                  <svg key="zap" viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
+                  /* Phone / Dialer */
+                  <svg key="phone" viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4a2 2 0 0 1 1.99-2.18H6.6a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>,
+                  /* Monitor / LOS */
+                  <svg key="monitor" viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>,
+                  /* Dollar / Pricing */
+                  <svg key="dollar" viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>,
+                  /* Calendar / Scheduling */
+                  <svg key="calendar" viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>,
+                  /* Mail / Email */
+                  <svg key="mail" viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,
+                  /* Users / Contacts */
+                  <svg key="users" viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
+                  /* Globe / Web */
+                  <svg key="globe" viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>,
+                  /* Database / Data */
+                  <svg key="database" viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>,
+                  /* Link / API */
+                  <svg key="link" viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>,
+                  /* Clock / Automation */
+                  <svg key="clock" viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
+                  /* File / Documents */
+                  <svg key="file" viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>,
+                  /* Gear / Settings */
+                  <svg key="gear" viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
+                  /* Shield / Security */
+                  <svg key="shield" viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+                  /* Home / Mortgage */
+                  <svg key="home" viewBox="0 0 24 24" fill="none" width="30" height="30" stroke="currentColor" strokeWidth="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
+                ].map((icon, i) => (
+                  <div
+                    className="integration-logo"
+                    key={i}
+                    style={{ '--i': i, '--total': 15 } as React.CSSProperties}
+                  >
+                    <div className="integration-logo-inner">{icon}</div>
+                  </div>
                 ))}
+              </div>
+              <div className="integrations-orbit-center">
+                <div className="section-tag">INTEGRATIONS</div>
+                <h2 className="heading-section"><span className="highlight">Seamless</span> Integrations</h2>
+                <p className="integrations-quote">&ldquo;Our automations plug into your stack to create a unified, intelligent workflow&rdquo;</p>
               </div>
             </div>
           </div>
@@ -387,44 +356,6 @@ export default function HomePage() {
 
         {/* FAQ */}
         <FAQ />
-
-        {/* COMPARISON */}
-        <section className="bg-muted section-pad" id="comparison">
-          <div className="container">
-            <div className="text-center mb-12">
-              <div className="section-tag">COMPARISON</div>
-              <h2 className="heading-section">Why Choose Us <span className="highlight">Over Others</span></h2>
-              <p className="section-sub" style={{ margin: '0 auto 32px' }}>See how we compare against others in performance and growth</p>
-            </div>
-            <div className="comparison-grid">
-              <div className="comparison-card comparison-us">
-                <div className="comparison-logo-wrap">
-                  <Image src="/images/loflow-favicon.png" alt="LOFlow Logo" width={36} height={36} />
-                  <span style={{ fontFamily: 'var(--font)', fontWeight: 900, textTransform: 'uppercase' as const }}>LOFlow</span>
-                </div>
-                <ul className="comparison-list">
-                  {['Fast setup & Implemented on your behalf', 'Built to grow and adapt with you', 'Real-time Integrations & Follow-ups', 'Automates tasks, reducing overhead', 'Expert support + AI guidance'].map((item, i) => (
-                    <li key={i}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="comparison-card">
-                <div className="comparison-others-label">Others</div>
-                <ul className="comparison-list comparison-list-neg">
-                  {['Slower execution and manual setup', 'Requires manual updates as you scale', 'Limited or delayed reporting', 'Higher labor costs, less automation', 'Generic support or none at all'].map((item, i) => (
-                    <li key={i}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* CTA */}
         <section className="cta-section" id="cta">
@@ -435,16 +366,6 @@ export default function HomePage() {
             <button className="btn-primary" onClick={() => setBookingOpen(true)}>
               BOOK A FREE CALL &rarr;
             </button>
-            <div className="cta-social">
-              <a href="https://www.instagram.com/mortgage_automation" target="_blank" rel="noopener" className="social-link" aria-label="Instagram">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-              </a>
-              <div className="social-divider"></div>
-              <a href="https://www.facebook.com/profile.php?id=100085539895958" target="_blank" rel="noopener" className="social-link" aria-label="Facebook">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-              </a>
-            </div>
-            <a href="mailto:hello@loflowsolutions.com" className="cta-email">hello@loflowsolutions.com</a>
           </div>
         </section>
       </main>

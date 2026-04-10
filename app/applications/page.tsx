@@ -17,7 +17,7 @@ export default function ApplicationsPage() {
   return (
     <>
       <Header onOpenBooking={() => setBookingOpen(true)} />
-      <main style={{ paddingTop: '72px' }}>
+      <main className="main-content">
 
         {/* Hero */}
         <section className="section-pad">
@@ -32,7 +32,7 @@ export default function ApplicationsPage() {
 
         {/* Apps */}
         {apps.map((app, i) => (
-          <section key={i} className={`section-pad${i % 2 === 0 ? ' bg-muted' : ''}`}>
+          <section key={i} id={`app-${i}`} className={`section-pad${i % 2 === 0 ? ' bg-muted' : ''}`}>
             <div className="container">
               <div className={`feature-detail${app.reversed ? ' reverse' : ''}`}>
                 <div>

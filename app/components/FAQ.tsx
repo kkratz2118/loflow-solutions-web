@@ -6,22 +6,27 @@ const faqs = [
   {
     question: 'What types of processes can you automate?',
     answer: 'We specialize in automating repetitive workflows across operations, marketing, sales, and customer support using AI and custom logic.',
+    highlight: 'Automates tasks, reducing overhead',
   },
   {
     question: 'Do I need technical knowledge to use your service?',
     answer: "Not at all. Our team handles the setup, integration, and optimization. You just focus on your goals — we'll automate the rest.",
+    highlight: 'Fast setup & implemented on your behalf',
   },
   {
     question: 'Can you integrate with our existing tools?',
     answer: 'Yes! We support integrations with CRMs, project management tools, communication apps, and more — tailored to your stack.',
+    highlight: 'Real-time Integrations & Follow-ups',
   },
   {
     question: 'How long does implementation take?',
     answer: 'Most clients see their first automation live within 1–2 weeks, depending on complexity and the number of workflows.',
+    highlight: 'Built to grow and adapt with you',
   },
   {
-    question: 'Is your AI secure and compliant?',
-    answer: 'Absolutely. We use enterprise-grade security practices and ensure compliance with major data privacy standards like GDPR.',
+    question: 'What kind of support do I get after setup?',
+    answer: "You're never left on your own. We provide ongoing optimization, strategic guidance, and hands-on help so your systems keep performing as your business evolves.",
+    highlight: 'Expert support + AI guidance',
   },
 ];
 
@@ -51,6 +56,10 @@ export default function FAQ() {
                 </button>
                 <div className="faq-answer">
                   <p>{faq.answer}</p>
+                  <div className="faq-highlight">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    {faq.highlight}
+                  </div>
                 </div>
               </div>
             ))}

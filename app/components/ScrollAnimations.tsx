@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 export default function ScrollAnimations() {
   useEffect(() => {
-    const fadeEls = document.querySelectorAll('main section, .card, .service-card, .feature-item, .metric-card, .kanban-card, .comparison-card, .faq-item, .widget');
+    const fadeEls = document.querySelectorAll('main section');
     fadeEls.forEach(el => el.classList.add('fade-in'));
 
     // Stagger: assign transition-delay based on data-stagger attribute

@@ -1452,6 +1452,7 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   gap: 24px;
   width: max-content;
   animation: marquee-scroll 30s linear infinite;
+  will-change: transform;
 }
 .trusted-marquee-track:hover {
   animation-play-state: paused;
@@ -1555,6 +1556,7 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   border-radius: 50%;
   border: 1px solid var(--border);
   animation: orbit-spin 30s linear infinite;
+  will-change: transform;
 }
 
 @keyframes orbit-spin {
@@ -1758,11 +1760,13 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.5s ease;
+  will-change: opacity, transform;
 }
 
 .fade-in.visible {
   opacity: 1;
   transform: translateY(0);
+  will-change: auto;
 }
 
 /* ─── CONTACT PAGE ─────────────────────────────────── */

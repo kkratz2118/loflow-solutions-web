@@ -28,17 +28,14 @@
   --max-w: 1152px;
 }
 
-html { font-size: 16px; overflow-x: hidden; }
-
-@media (prefers-reduced-motion: no-preference) {
-  html { scroll-behavior: smooth; }
-}
+html { font-size: 16px; }
 
 body {
   font-family: var(--font-sans);
   background: var(--bg);
   color: var(--fg);
   line-height: 1.6;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -188,7 +185,6 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
 /* ─── HEADER ──────────────────────────────────────── */
 .main-content {
   padding-top: 72px;
-  overflow-x: hidden;
 }
 .site-header.has-banner + .main-content,
 .site-header.has-banner ~ main.main-content {

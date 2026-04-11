@@ -18,11 +18,6 @@ export default function ScrollAnimations() {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
 
-          // Trigger counter animation for stat values inside this element
-          entry.target.querySelectorAll('.card-stat-value[data-target]').forEach(statEl => {
-            animateCounter(statEl as HTMLElement);
-          });
-
           // Clear stagger delay after entrance so hover transitions aren't delayed
           const el = entry.target as HTMLElement;
           if (el.dataset.stagger) {
@@ -35,37 +30,19 @@ export default function ScrollAnimations() {
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    // Separate observer for pipeline banner — replays every time, with 2s delay
-    const bannerTimers: number[] = [];
-    const bannerObserver = new IntersectionObserver((entries) => {
+    // Separate observer for pipeline banner — plays once with delay
+    let bannerTimer: number | null = null;
+    const bannerObserver = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
-        const el = entry.target as HTMLElement;
         if (entry.isIntersecting) {
-          // Reset: remove visible, reset counter text
-          el.classList.remove('visible');
-          el.querySelectorAll('.card-stat-value[data-target]').forEach(statEl => {
-            const s = statEl as HTMLElement;
-            s.removeAttribute('data-animated');
-            s.textContent = '0' + (s.dataset.suffix || '');
-          });
-          // Force reflow so the reset takes effect before re-adding visible
-          void el.offsetWidth;
-          // 2 second delay then animate
-          const timer = window.setTimeout(() => {
+          const el = entry.target as HTMLElement;
+          bannerTimer = window.setTimeout(() => {
             el.classList.add('visible');
             el.querySelectorAll('.card-stat-value[data-target]').forEach(statEl => {
               animateCounter(statEl as HTMLElement);
             });
           }, 1000);
-          bannerTimers.push(timer);
-        } else {
-          // Scrolled away — reset immediately so it's ready for next entrance
-          el.classList.remove('visible');
-          el.querySelectorAll('.card-stat-value[data-target]').forEach(statEl => {
-            const s = statEl as HTMLElement;
-            s.removeAttribute('data-animated');
-            s.textContent = '0' + (s.dataset.suffix || '');
-          });
+          obs.unobserve(entry.target);
         }
       });
     }, { threshold: 0.3 });
@@ -75,7 +52,7 @@ export default function ScrollAnimations() {
     return () => {
       observer.disconnect();
       bannerObserver.disconnect();
-      bannerTimers.forEach(t => clearTimeout(t));
+      if (bannerTimer) clearTimeout(bannerTimer);
     };
   }, []);
 

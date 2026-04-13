@@ -50,7 +50,7 @@ export default function Header({ onOpenBooking }: HeaderProps) {
         </div>
       )}
       <nav className="nav-inner">
-        <Link href="/#top" className="nav-logo">
+        <Link href="/" className="nav-logo">
           <Image src="/images/loflow-favicon.png" alt="LOFlow Solutions Logo" width={160} height={40} priority />
         </Link>
         <div className="nav-links">

@@ -1,1 +1,1 @@
-export const APP_NAMES = ['DataBuddy', 'App Name Here', 'App Name Here'] as const;
+export const APP_NAMES = ['DataBuddy', 'DataDrive', 'DataBridge'] as const;

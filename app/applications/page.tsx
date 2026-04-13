@@ -22,7 +22,7 @@ const apps = [
   },
   {
     label: 'Application 02',
-    name: 'App Name Here',
+    name: 'DataDrive',
     reversed: true,
     description: 'A brief description of what this application does and the problem it solves for mortgage professionals.',
     features: [
@@ -36,7 +36,7 @@ const apps = [
   },
   {
     label: 'Application 03',
-    name: 'App Name Here',
+    name: 'DataBridge',
     reversed: false,
     description: 'A brief description of what this application does and the problem it solves for mortgage professionals.',
     features: [
@@ -60,7 +60,7 @@ export default function ApplicationsPage() {
       <main className="main-content">
 
         {/* Hero */}
-        <section className="section-pad">
+        <section className="section-pad" style={{ paddingTop: '40px', paddingBottom: '24px' }}>
           <div className="container">
             <div className="text-center mb-12">
               <div className="section-tag">OUR TOOLS</div>
@@ -100,7 +100,7 @@ export default function ApplicationsPage() {
                     style={{ width: 'fit-content' }}
                     onClick={() => { setSelectedTool(app.name); setBookingOpen(true); }}
                   >
-                    JOIN TODAY! &rarr;
+                    SCHEDULE YOUR DEMO! &rarr;
                   </button>
                 </div>
               </div>

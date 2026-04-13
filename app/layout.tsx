@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
+import CookieBanner from './components/CookieBanner';
 import './globals.css';
 
 export const viewport: Viewport = {
@@ -38,6 +39,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
+        <CookieBanner />
         <Script src="https://ro.am/lobbylinks/embed.js" strategy="lazyOnload" />
       </body>
     </html>

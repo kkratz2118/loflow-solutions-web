@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import BookingModal from '../components/BookingModal';
@@ -53,6 +53,18 @@ const apps = [
 export default function ApplicationsPage() {
   const [bookingOpen, setBookingOpen] = useState(false);
   const [selectedTool, setSelectedTool] = useState('');
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const el = document.querySelector(hash);
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+      }
+    }
+  }, []);
 
   return (
     <>

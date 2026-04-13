@@ -68,7 +68,7 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   line-height: 1.05;
   letter-spacing: -0.02em;
   text-transform: uppercase;
-  margin-bottom: 64px;
+  margin-bottom: 28px;
   overflow-wrap: break-word;
   max-width: 100%;
 }
@@ -103,7 +103,7 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   font-size: 1rem;
   color: var(--fg-muted);
   max-width: 520px;
-  margin: 0 auto 72px;
+  margin: 0 auto 40px;
   text-align: center;
 }
 
@@ -334,7 +334,7 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 48px 24px 32px;
+  padding: 48px 24px 120px;
   overflow: hidden;
 }
 .hero-section > .container {
@@ -2030,11 +2030,11 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
 /* ─── RESPONSIVE: TABLET ──────────────────────────── */
 @media (max-width: 768px) {
   .section-pad { padding: 60px 20px; }
-  .hero-section { min-height: auto; padding: 32px 20px 24px; }
+  .hero-section { min-height: auto; padding: 32px 20px 100px; }
   .hero-section > .container { gap: 32px; padding-top: 24px; }
   .hero-content { max-width: 100% !important; align-items: center; width: 100%; }
-  .heading-display { font-size: clamp(1.2rem, 4vw, 2rem); text-align: center; }
-  .subheadline { max-width: 100%; text-align: center; }
+  .heading-display { font-size: clamp(1.2rem, 4vw, 2rem); text-align: center; margin-bottom: 24px; }
+  .subheadline { max-width: 100%; text-align: center; margin-bottom: 36px; }
   .hero-br { display: none; }
   .pipeline-stat { flex-wrap: wrap; white-space: normal; justify-content: center; text-align: center; }
   .pipeline-stat-value { font-size: 1.75rem; }
@@ -2049,11 +2049,10 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
 @media (max-width: 480px) {
   .section-pad { padding: 48px 16px; }
   .container { padding: 0 16px; }
-  .hero-section { padding: 24px 16px 20px; }
-  .heading-display { font-size: clamp(1rem, 4.8vw, 1.5rem); text-align: center; letter-spacing: -0.03em; }
-  .subheadline { max-width: 100%; text-align: center; }
+  .hero-section { padding: 24px 16px 80px; }
+  .heading-display { font-size: clamp(1rem, 4.8vw, 1.5rem); text-align: center; letter-spacing: -0.03em; margin-bottom: 20px; }
+  .subheadline { max-width: 100%; text-align: center; font-size: 0.9rem; margin-bottom: 32px; }
   .hero-content { width: 100%; padding: 0; }
-  .subheadline { font-size: 0.9rem; }
   .btn-group { flex-direction: column; align-items: center; }
   .btn-primary, .btn-secondary { justify-content: center; text-align: center; width: 100%; max-width: 280px; }
   .pipeline-stat-value { font-size: 1.5rem; }

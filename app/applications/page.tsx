@@ -24,29 +24,29 @@ const apps = [
     label: 'Application 02',
     name: 'DataDrive',
     reversed: true,
-    description: 'A brief description of what this application does and the problem it solves for mortgage professionals.',
+    description: 'Gamification for the mortgage industry — turning complex financial tasks into engaging experiences with points, badges, and progress tracking to boost customer engagement, retention, and faster loan processing.',
     features: [
       'Key feature or benefit one',
       'Key feature or benefit two',
       'Key feature or benefit three',
       'Key feature or benefit four',
     ],
-    screenshotSrc: null,
-    screenshotAlt: '',
+    screenshotSrc: '/images/Image Coming Soon.png',
+    screenshotAlt: 'DataDrive screenshot coming soon',
   },
   {
     label: 'Application 03',
     name: 'DataBridge',
     reversed: false,
-    description: 'A brief description of what this application does and the problem it solves for mortgage professionals.',
+    description: 'A learning platform built exclusively for mortgage professionals who want to stop drowning in disconnected tools and start building systems that actually close more deals — no code required.',
     features: [
-      'Key feature or benefit one',
-      'Key feature or benefit two',
-      'Key feature or benefit three',
-      'Key feature or benefit four',
+      'Video tutorials, written guides, and courses built around real mortgage workflows and tools like Zapier, N8N, GoHighLevel, and more',
+      'The Bridge — a built-in community forum to ask questions, share solutions, and learn from other mortgage professionals',
+      'Content organized by skill level, instructor, and tools so you always know where to pick up',
+      'Free tier to explore the full library, with Pro access at $49/mo for all content and full community access',
     ],
-    screenshotSrc: null,
-    screenshotAlt: '',
+    screenshotSrc: '/images/Image Coming Soon.png',
+    screenshotAlt: 'DataBridge screenshot coming soon',
   },
 ];
 
@@ -87,7 +87,10 @@ export default function ApplicationsPage() {
           <section key={i} id={`app-${i}`} className={`section-pad${i % 2 === 0 ? ' bg-muted' : ''}`}>
             <div className="container">
               <div className={`feature-detail${app.reversed ? ' reverse' : ''}`}>
-                <div>
+                <div className="app-name-mobile">
+                  <h2 className="heading-section" style={{ textTransform: 'none', fontFamily: 'var(--font)' }}>{app.name}</h2>
+                </div>
+                <div className="app-image-col">
                   <div className="app-screenshot">
                     {app.screenshotSrc ? (
                       <img src={app.screenshotSrc} alt={app.screenshotAlt} />
@@ -99,8 +102,8 @@ export default function ApplicationsPage() {
                     )}
                   </div>
                 </div>
-                <div>
-                  <h2 className="heading-section" style={{ textTransform: 'none', fontFamily: 'var(--font)' }}>{app.name}</h2>
+                <div className="app-info-col">
+                  <h2 className="heading-section app-name-desktop" style={{ textTransform: 'none', fontFamily: 'var(--font)' }}>{app.name}</h2>
                   <p className="subheadline">{app.description}</p>
                   <ul className="app-features">
                     {app.features.map((feat, j) => (

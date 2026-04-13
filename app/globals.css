@@ -695,6 +695,8 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   align-items: center;
 }
 
+.feature-detail .app-name-mobile { display: none; }
+
 .feature-detail.reverse { direction: rtl; }
 .feature-detail.reverse > * { direction: ltr; }
 
@@ -702,8 +704,27 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   .feature-detail,
   .feature-detail.reverse {
     grid-template-columns: 1fr;
+    gap: 0;
     direction: ltr;
     text-align: center;
+  }
+  .feature-detail .app-name-mobile {
+    display: block;
+    order: 1;
+    margin-bottom: 12px;
+  }
+  .feature-detail .app-name-mobile .heading-section {
+    font-size: 2rem;
+  }
+  .feature-detail .app-image-col {
+    order: 2;
+    margin-bottom: 16px;
+  }
+  .feature-detail .app-info-col {
+    order: 3;
+  }
+  .feature-detail .app-name-desktop {
+    display: none;
   }
   .feature-detail .btn-primary {
     margin: 0 auto;

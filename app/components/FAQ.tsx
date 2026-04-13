@@ -46,30 +46,22 @@ export default function FAQ() {
           <p className="section-sub" style={{ margin: '0 auto 32px' }}>Find quick answers to the most common support questions</p>
         </div>
 
-        <div className="faq-layout">
-          <div className="faq-list">
-            {faqs.map((faq, i) => (
-              <div key={i} className={`faq-item${openIndex === i ? ' open' : ''}`}>
-                <button className="faq-question" onClick={() => toggle(i)}>
-                  <span>{faq.question}</span>
-                  <svg className="faq-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
-                </button>
-                <div className="faq-answer">
-                  <p>{faq.answer}</p>
-                  <div className="faq-highlight">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                    {faq.highlight}
-                  </div>
+        <div className="faq-list" style={{ maxWidth: '700px', margin: '0 auto' }}>
+          {faqs.map((faq, i) => (
+            <div key={i} className={`faq-item${openIndex === i ? ' open' : ''}`}>
+              <button className="faq-question" onClick={() => toggle(i)}>
+                <span>{faq.question}</span>
+                <svg className="faq-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div className="faq-answer">
+                <p>{faq.answer}</p>
+                <div className="faq-highlight">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  {faq.highlight}
                 </div>
               </div>
-            ))}
-          </div>
-
-          <div className="faq-contact-card">
-            <h3>Still Have Questions?</h3>
-            <p>Feel free to get in touch with us today!</p>
-            <a href="mailto:hello@loflowsolutions.com" className="btn-secondary">Ask A Question</a>
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

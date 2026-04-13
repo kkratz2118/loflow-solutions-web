@@ -9,6 +9,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
+  color-scheme: light dark;
   --bg: #FFFFFF;
   --bg-muted: #f4f4f5;
   --fg: #121212;
@@ -26,6 +27,128 @@
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-accent: 'Playfair Display', Georgia, serif;
   --max-w: 1152px;
+}
+
+/* ─── DARK MODE (auto, based on system preference) ── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:           #0F0F0F;
+    --bg-muted:     #1A1A1C;
+    --fg:           #E8E8E8;
+    --fg-muted:     #9A9A9A;
+    --border:       #2A2A2C;
+    --primary:      #E8E8E8;
+    --primary-fg:   #0F0F0F;
+    --accent:       #1DE9B6;
+    --accent-dark:  #5DFCD2;
+    --accent-light: #0D2E26;
+    --accent-mid:   #1ACFA2;
+    --card-bg:      #151517;
+  }
+
+  /* Header */
+  .site-header {
+    background: #0F0F0F;
+  }
+  .site-header.scrolled {
+    box-shadow: 0 1px 8px rgba(0,0,0,0.3);
+  }
+
+  /* Notification bar */
+  .notification-bar {
+    background: linear-gradient(90deg, #0F0F0F 0%, #0D2E26 30%, #0F3D32 65%, #1ACFA2 100%);
+    color: #5DFCD2;
+  }
+  .notification-bar-link {
+    color: #5DFCD2;
+  }
+  .notification-bar-badge {
+    background: #5DFCD2;
+    color: #0F0F0F;
+  }
+  .notification-bar-close {
+    color: #5DFCD2;
+  }
+
+  /* Pipeline stat banner */
+  .pipeline-stat-banner {
+    background: #151517;
+  }
+  .pipeline-stat-banner::before {
+    background: linear-gradient(90deg, #0F0F0F 0%, #0D2E26 30%, #0F3D32 65%, #1ACFA2 100%);
+  }
+  .pipeline-stat-value,
+  .pipeline-stat-label {
+    color: #5DFCD2;
+  }
+
+
+  /* FAQ */
+  .faq-highlight {
+    background: #1A1A1C;
+    color: #E8E8E8;
+  }
+
+  /* Shadows (boost for dark bg visibility) */
+  .card:hover {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+  .widget {
+    box-shadow: 0 4px 32px rgba(0,0,0,0.25);
+  }
+
+  /* Hero gradient (subtle boost) */
+  .hero-gradient {
+    background: radial-gradient(ellipse, rgba(29,233,182,0.15) 0%, rgba(13,101,79,0.08) 50%, transparent 70%);
+  }
+
+  /* Keep integration icons in light mode */
+  .integration-logo-inner {
+    background: #ffffff !important;
+    border-color: #E0E0E0 !important;
+  }
+  .integration-logo svg {
+    stroke: #5A5A5A !important;
+  }
+
+  /* Keep kanban pipeline columns in light mode */
+  .kanban-col {
+    background: #f4f4f5 !important;
+  }
+  .kanban-col-title {
+    color: #5A5A5A !important;
+  }
+  .kanban-col-count {
+    background: #E0E0E0 !important;
+    color: #5A5A5A !important;
+  }
+  .kanban-card {
+    background: #ffffff !important;
+    border-color: #E0E0E0 !important;
+    color: #121212 !important;
+  }
+  .kanban-card-name {
+    color: #121212 !important;
+  }
+  .kanban-card-meta {
+    color: #5A5A5A !important;
+  }
+  .kanban-card-tools {
+    border-color: #E0E0E0 !important;
+  }
+  .kanban-tool {
+    background: #f4f4f5 !important;
+    color: #5A5A5A !important;
+  }
+  .source-crm { background: #E8F5E9 !important; color: #2E7D32 !important; }
+  .source-los { background: #E3F2FD !important; color: #1565C0 !important; }
+  .source-web { background: #FFF3E0 !important; color: #E65100 !important; }
+
+  /* Keep trusted-by logo containers white so images render correctly */
+  .trusted-logo {
+    background: #ffffff !important;
+    border-color: #E0E0E0 !important;
+  }
 }
 
 html { font-size: 16px; }
@@ -1250,18 +1373,6 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
 }
 
 /* ─── FAQ ──────────────────────────────────────────── */
-.faq-layout {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 48px;
-  align-items: center;
-}
-
-@media (max-width: 900px) {
-  .faq-layout { grid-template-columns: 1fr; }
-}
-
-.faq-list { max-width: 700px; }
 
 .faq-item {
   border-bottom: 1px solid var(--border);
@@ -1307,12 +1418,13 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   gap: 8px;
   margin-top: 12px;
   padding: 10px 16px;
-  background: var(--accent-light);
-  border: 1px solid var(--accent);
+  background: #fff;
+  border: none;
   border-radius: 8px;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.25), 0 0 60px rgba(16, 185, 129, 0.1);
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--accent);
+  color: #111;
 }
 
 .faq-highlight svg {
@@ -1322,11 +1434,11 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
 
 .faq-contact-card {
   background: var(--bg-muted);
-  border: 1px solid var(--accent);
+  border: 1px solid rgba(16, 185, 129, 0.4);
   border-radius: var(--radius);
   padding: 32px 24px;
   text-align: center;
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.25), 0 0 60px rgba(16, 185, 129, 0.1);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15), 0 0 60px rgba(16, 185, 129, 0.08);
 }
 
 .faq-contact-card h3 {
@@ -1434,6 +1546,7 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   font-size: clamp(1.5rem, 3.5vw, 2.2rem);
   font-weight: 700;
   text-transform: uppercase;
+  line-height: 1.2;
   margin-bottom: 16px;
 }
 

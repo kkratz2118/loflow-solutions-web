@@ -22,6 +22,7 @@ export default function BookingModal({ isOpen, onClose, defaultTool = '', toolOp
   const [tool, setTool] = useState(defaultTool);
   const [message, setMessage] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [showTermsWarning, setShowTermsWarning] = useState(false);
 
   useEffect(() => {
     setTool(defaultTool);
@@ -60,9 +61,11 @@ export default function BookingModal({ isOpen, onClose, defaultTool = '', toolOp
 
     if (nextStep === 3) {
       if (!agreedToTerms) {
-        alert('Please agree to the terms before continuing.');
+        setShowTermsWarning(true);
+        setTimeout(() => setShowTermsWarning(false), 3000);
         return;
       }
+      setShowTermsWarning(false);
       console.log('Booking form data:', { firstName, lastName, email, company, phone, tool, message });
     }
 
@@ -100,7 +103,7 @@ export default function BookingModal({ isOpen, onClose, defaultTool = '', toolOp
                 <input className="form-input" type="email" id="bookingEmail" placeholder="your@email.com" required value={email} onChange={e => setEmail(e.target.value)} />
               </div>
               <div className="modal-nav">
-                <button className="modal-btn-next" onClick={() => goToStep(2)}>Next</button>
+                <button className="modal-btn-next" onClick={() => goToStep(2)}>Next: Tell Us About Your Business</button>
               </div>
             </div>
           )}
@@ -131,21 +134,26 @@ export default function BookingModal({ isOpen, onClose, defaultTool = '', toolOp
                 <label className="form-label" htmlFor="bookingMessage">What are you looking for help with?</label>
                 <textarea className="form-textarea" id="bookingMessage" placeholder="Tell us what you're interested in..." style={{ minHeight: '80px' }} value={message} onChange={e => setMessage(e.target.value)} />
               </div>
-              <div className="form-group" style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginTop: '8px' }}>
+              <div className="form-group" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '8px', marginTop: '8px', whiteSpace: 'nowrap' }}>
                 <input
                   type="checkbox"
                   id="agreeTerms"
                   checked={agreedToTerms}
                   onChange={e => setAgreedToTerms(e.target.checked)}
-                  style={{ marginTop: '4px', accentColor: 'var(--accent)' }}
+                  style={{ accentColor: 'var(--accent)', flexShrink: 0 }}
                 />
-                <label htmlFor="agreeTerms" style={{ fontSize: '0.8rem', color: 'var(--fg-muted)', cursor: 'pointer', lineHeight: '1.4' }}>
+                <label htmlFor="agreeTerms" style={{ fontSize: '0.8rem', color: 'var(--fg-muted)', cursor: 'pointer' }}>
                   I agree to the <a href="/terms" target="_blank" rel="noopener" style={{ color: 'var(--accent)', textDecoration: 'underline' }}>Terms of Service</a> and <a href="/privacy" target="_blank" rel="noopener" style={{ color: 'var(--accent)', textDecoration: 'underline' }}>Privacy Policy</a>
                 </label>
               </div>
+              {showTermsWarning && (
+                <p style={{ fontSize: '0.78rem', color: '#ef4444', margin: '0 0 8px', textAlign: 'center' }}>
+                  Please agree to the terms before continuing.
+                </p>
+              )}
               <div className="modal-nav">
                 <button className="modal-btn-back" onClick={() => goToStep(1)}>Back</button>
-                <button className="modal-btn-next" onClick={() => goToStep(3)} disabled={!agreedToTerms} style={{ opacity: agreedToTerms ? 1 : 0.5, cursor: agreedToTerms ? 'pointer' : 'not-allowed' }}>Connect Me!</button>
+                <button className="modal-btn-next" onClick={() => goToStep(3)} style={{ opacity: agreedToTerms ? 1 : 0.5, cursor: agreedToTerms ? 'pointer' : 'not-allowed' }}>Connect Me!</button>
               </div>
             </div>
           )}

@@ -703,6 +703,10 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   .feature-detail.reverse {
     grid-template-columns: 1fr;
     direction: ltr;
+    text-align: center;
+  }
+  .feature-detail .btn-primary {
+    margin: 0 auto;
   }
 }
 

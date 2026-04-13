@@ -7,6 +7,7 @@ import BookingModal from './components/BookingModal';
 import Carousel from './components/Carousel';
 import FAQ from './components/FAQ';
 import ScrollAnimations from './components/ScrollAnimations';
+import HeroParallax from './components/HeroParallax';
 
 export default function HomePage() {
   const [bookingOpen, setBookingOpen] = useState(false);
@@ -60,7 +61,10 @@ export default function HomePage() {
 
         {/* HERO */}
         <section className="hero-section" id="hero">
-          <div className="hero-bg"><div className="hero-gradient"></div></div>
+          <div className="hero-bg">
+            <div className="hero-gradient"></div>
+            <HeroParallax />
+          </div>
           <div className="container">
             <div className="text-center hero-content">
                 <div className="badge-announcement">

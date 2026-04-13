@@ -364,6 +364,50 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   height: clamp(400px, 80vh, 600px);
   background: radial-gradient(ellipse, rgba(29,233,182,0.1) 0%, rgba(13,101,79,0.05) 50%, transparent 70%);
   border-radius: 50%;
+  will-change: transform;
+}
+
+/* Particles */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-particle {
+  position: absolute;
+  bottom: -10px;
+  border-radius: 50%;
+  background: rgba(29,233,182,0.8);
+  box-shadow: 0 0 10px 4px rgba(29,233,182,0.5);
+  animation: particle-float linear infinite;
+  will-change: transform;
+  pointer-events: none;
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--particle-opacity, 0.3);
+  }
+  90% {
+    opacity: var(--particle-opacity, 0.3);
+  }
+  100% {
+    transform: translateY(calc(-100vh - 20px)) translateX(20px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-particle {
+    animation: none;
+    display: none;
+  }
 }
 
 /* Badge */

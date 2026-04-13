@@ -1,24 +1,31 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { APP_NAMES } from '../data/apps';
 
 const ROAM_URL = 'https://ro.am/loflow-solutions-llc/lobby-3/';
 
 interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
+  defaultTool?: string;
+  toolOptions?: string[];
 }
 
-export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
+export default function BookingModal({ isOpen, onClose, defaultTool = '', toolOptions }: BookingModalProps) {
   const [step, setStep] = useState(1);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [company, setCompany] = useState('');
   const [phone, setPhone] = useState('');
-  const [tool, setTool] = useState('');
+  const [tool, setTool] = useState(defaultTool);
   const [message, setMessage] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+
+  useEffect(() => {
+    setTool(defaultTool);
+  }, [defaultTool]);
 
   const handleClose = useCallback(() => {
     onClose();
@@ -114,9 +121,9 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
                 <label className="form-label" htmlFor="bookingTool">Which tool are you interested in?</label>
                 <select className="modal-select" id="bookingTool" value={tool} onChange={e => setTool(e.target.value)}>
                   <option value="" disabled>Select a tool...</option>
-                  <option value="Application 01">Application 01</option>
-                  <option value="Application 02">Application 02</option>
-                  <option value="Application 03">Application 03</option>
+                  {(toolOptions ?? [...APP_NAMES]).map((name) => (
+                    <option key={name} value={name}>{name}</option>
+                  ))}
                   <option value="Not sure yet">Not sure yet</option>
                 </select>
               </div>

@@ -77,7 +77,6 @@ export default function HomePage() {
                   <button className="btn-primary" onClick={() => setBookingOpen(true)}>
                     BOOK A FREE CALL &rarr;
                   </button>
-                  <a href="#services" className="btn-secondary">LEARN MORE</a>
                 </div>
             </div>
             <div className="carousel-desktop">

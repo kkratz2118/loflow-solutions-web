@@ -26,10 +26,10 @@ export default function Header({ onOpenBooking }: HeaderProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToCenter = (e: React.MouseEvent, id: string) => {
-    e.preventDefault();
+  const scrollToCenter = (e: React.MouseEvent, id: string, href?: string) => {
     const el = document.getElementById(id);
     if (el) {
+      e.preventDefault();
       const top = el.getBoundingClientRect().top + window.scrollY - (window.innerHeight / 2) + (el.offsetHeight / 2);
       window.scrollTo({ top, behavior: 'smooth' });
     }
@@ -39,7 +39,7 @@ export default function Header({ onOpenBooking }: HeaderProps) {
     <header className={`site-header${scrolled ? ' scrolled' : ''}${bannerVisible ? ' has-banner' : ''}`} id="top">
       {bannerVisible && (
         <div className="notification-bar">
-          <Link href={announcement.href} className="notification-bar-link">
+          <Link href={announcement.href} className="notification-bar-link" onClick={(e) => scrollToCenter(e, 'app-0')}>
             <span className="notification-bar-badge">NEW</span>
             {announcement.text}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>

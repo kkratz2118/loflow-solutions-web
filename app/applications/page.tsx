@@ -58,15 +58,20 @@ export default function ApplicationsPage() {
   const [selectedTool, setSelectedTool] = useState('');
 
   useEffect(() => {
-    const hash = window.location.hash;
-    if (hash) {
-      const el = document.querySelector(hash);
-      if (el) {
-        setTimeout(() => {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 100);
+    const scrollToHash = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const el = document.querySelector(hash) as HTMLElement | null;
+        if (el) {
+          const top = el.getBoundingClientRect().top + window.scrollY - (window.innerHeight / 2) + (el.offsetHeight / 2);
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
       }
-    }
+    };
+
+    setTimeout(scrollToHash, 100);
+    window.addEventListener('hashchange', scrollToHash);
+    return () => window.removeEventListener('hashchange', scrollToHash);
   }, []);
 
   return (

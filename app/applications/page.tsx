@@ -170,7 +170,7 @@ export default function ApplicationsPage() {
       </main>
 
       <Footer />
-      <BookingModal isOpen={bookingOpen} onClose={() => setBookingOpen(false)} defaultTool={selectedTool} toolOptions={apps.map(a => a.name)} />
+      <BookingModal isOpen={bookingOpen} onClose={() => setBookingOpen(false)} defaultTool={selectedTool} toolOptions={apps.filter(a => !a.comingSoon).map(a => a.name)} />
     </>
   );
 }

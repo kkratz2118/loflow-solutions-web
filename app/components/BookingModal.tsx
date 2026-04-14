@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { APP_NAMES } from '../data/apps';
+import { AVAILABLE_APP_NAMES } from '../data/apps';
 
 const ROAM_URL = 'https://ro.am/loflow-solutions-llc/lobby-3/';
 
@@ -142,7 +142,7 @@ export default function BookingModal({ isOpen, onClose, defaultTool = '', toolOp
                 <label className="form-label" htmlFor="bookingTool">Which tool are you interested in?</label>
                 <select className="modal-select" id="bookingTool" value={tool} onChange={e => setTool(e.target.value)}>
                   <option value="" disabled>Select a tool...</option>
-                  {(toolOptions ?? [...APP_NAMES]).map((name) => (
+                  {(toolOptions ?? [...AVAILABLE_APP_NAMES]).map((name) => (
                     <option key={name} value={name}>{name}</option>
                   ))}
                   <option value="Not sure yet">Not sure yet</option>

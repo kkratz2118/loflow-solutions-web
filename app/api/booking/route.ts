@@ -23,17 +23,11 @@ export async function POST(request: Request) {
   if (company) ghlBody.companyName = company;
   if (phone) ghlBody.phone = phone;
 
-  // Store the message and terms agreement in custom fields or notes
-  const notes: string[] = [];
-  if (tool) notes.push(`Tool interest: ${tool}`);
-  if (message) notes.push(`Message: ${message}`);
-  if (agreed_to_terms) notes.push('Agreed to terms: Yes');
+  ghlBody.customFields = [
+    { id: 'osYH92xw2sa2ZniY17Pc', value: message || '' },
+  ];
 
-  // GHL doesn't have a direct "notes" field on create, so we can add it via customFields
-  // For now, we combine tool + message into tags for visibility
-  if (message) {
-    ghlBody.tags = [...(ghlBody.tags as string[]), 'Has Message'];
-  }
+  console.log('GHL request body:', JSON.stringify(ghlBody, null, 2));
 
   try {
     const response = await fetch(GHL_API_URL, {

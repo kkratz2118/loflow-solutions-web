@@ -19,6 +19,7 @@ const apps = [
     ],
     screenshotSrc: '/images/databuddy-screenshot.png',
     screenshotAlt: 'DataBuddy pipeline analytics dashboard',
+    comingSoon: false,
   },
   {
     label: 'Application 02',
@@ -33,6 +34,7 @@ const apps = [
     ],
     screenshotSrc: '/images/Image Coming Soon.png',
     screenshotAlt: 'DataDrive screenshot coming soon',
+    comingSoon: true,
   },
   {
     label: 'Application 03',
@@ -47,6 +49,7 @@ const apps = [
     ],
     screenshotSrc: '/images/Image Coming Soon.png',
     screenshotAlt: 'DataBridge screenshot coming soon',
+    comingSoon: true,
   },
 ];
 
@@ -85,8 +88,11 @@ export default function ApplicationsPage() {
         {/* Apps */}
         {apps.map((app, i) => (
           <section key={i} id={`app-${i}`} className={`section-pad${i % 2 === 0 ? ' bg-muted' : ''}`}>
-            <div className="container">
-              <div className={`feature-detail${app.reversed ? ' reverse' : ''}`}>
+            <div className="container" style={{ position: 'relative' }}>
+              <div
+                className={`feature-detail${app.reversed ? ' reverse' : ''}`}
+                style={app.comingSoon ? { filter: 'blur(6px)', pointerEvents: 'none', userSelect: 'none' } : undefined}
+              >
                 <div className="app-name-mobile">
                   <h2 className="heading-section" style={{ textTransform: 'none', fontFamily: 'var(--font)' }}>{app.name}</h2>
                 </div>
@@ -110,15 +116,24 @@ export default function ApplicationsPage() {
                       <li key={j}>{feat}</li>
                     ))}
                   </ul>
-                  <button
-                    className="btn-primary"
-                    style={{ width: 'fit-content' }}
-                    onClick={() => { setSelectedTool(app.name); setBookingOpen(true); }}
-                  >
-                    SCHEDULE YOUR DEMO! &rarr;
-                  </button>
+                  {!app.comingSoon && (
+                    <button
+                      className="btn-primary"
+                      style={{ width: 'fit-content' }}
+                      onClick={() => { setSelectedTool(app.name); setBookingOpen(true); }}
+                    >
+                      SCHEDULE YOUR DEMO! &rarr;
+                    </button>
+                  )}
                 </div>
               </div>
+              {app.comingSoon && (
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10 }}>
+                  <span style={{ background: 'var(--accent)', color: '#fff', padding: '12px 32px', borderRadius: '8px', fontSize: '1.25rem', fontWeight: 700, letterSpacing: '0.05em' }}>
+                    COMING SOON
+                  </span>
+                </div>
+              )}
             </div>
           </section>
         ))}

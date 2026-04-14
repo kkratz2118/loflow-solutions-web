@@ -1639,7 +1639,7 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
 }
 @keyframes marquee-scroll {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  100% { transform: translateX(calc(-50% - 12px)); }
 }
 .trusted-logo {
   position: relative;
@@ -2207,6 +2207,49 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   color: var(--fg-muted);
   margin-bottom: 16px;
   line-height: 1.7;
+}
+
+/* ─── RESPONSIVE: TABLET PORTRAIT ────────────────── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-section {
+    min-height: auto;
+    padding: 32px 20px 48px;
+  }
+  .hero-section > .container {
+    gap: 32px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  .hero-content {
+    max-width: 100%;
+    width: 100%;
+    align-items: center;
+  }
+  .heading-display {
+    font-size: clamp(1.5rem, 3.6vw, 2.2rem);
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .subheadline {
+    max-width: 480px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .badge-announcement {
+    margin-bottom: 24px;
+  }
+  .carousel-desktop {
+    display: none;
+  }
+  .carousel-mobile {
+    display: block;
+    overflow: hidden;
+  }
+  .trusted-logo {
+    width: 160px;
+    height: 80px;
+  }
+  .section-pad { padding: 64px 24px; }
 }
 
 /* ─── RESPONSIVE: TABLET ──────────────────────────── */

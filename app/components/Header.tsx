@@ -9,7 +9,7 @@ interface HeaderProps {
 }
 
 const announcement = {
-  text: 'DataBuddy — AI-powered pipeline analytics is now in beta!',
+  text: 'DataBuddy — AI-powered pipeline analytics is now available!',
   href: '/applications#app-0',
 };
 

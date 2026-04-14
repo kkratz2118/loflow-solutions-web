@@ -698,6 +698,7 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
 }
 
 .feature-detail .app-name-mobile { display: none; }
+.feature-detail .subheadline { text-align: left; margin-left: 0; }
 
 .feature-detail.reverse { direction: rtl; }
 .feature-detail.reverse > * { direction: ltr; }
@@ -724,12 +725,13 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   }
   .feature-detail .app-info-col {
     order: 3;
+    text-align: left;
   }
   .feature-detail .app-name-desktop {
     display: none;
   }
   .feature-detail .btn-primary {
-    margin: 0 auto;
+    margin: 0;
   }
 }
 

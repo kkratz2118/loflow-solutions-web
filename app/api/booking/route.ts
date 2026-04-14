@@ -6,13 +6,13 @@ export async function POST(request: Request) {
 
   const { first_name, last_name, email, company, phone, tool, message, agreed_to_terms } = body;
 
-  if (!first_name || !last_name || !email || !tool) {
+  if (!first_name || !last_name || !email) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
   }
 
   const { data, error } = await supabase
     .from('booking_submissions')
-    .insert([{ first_name, last_name, email, company, phone, tool, message, agreed_to_terms }])
+    .insert([{ first_name, last_name, email, company, phone, tool: tool || 'Not specified', message, agreed_to_terms }])
     .select();
 
   if (error) {

@@ -80,7 +80,11 @@ export default function BookingModal({ isOpen, onClose, defaultTool = '', toolOp
           message: message || null,
           agreed_to_terms: agreedToTerms,
         }),
-      }).catch((err) => console.error('Failed to save booking:', err));
+      })
+        .then((res) => {
+          if (res && !res.ok) console.error('Booking API error:', res.status);
+        })
+        .catch((err) => console.error('Failed to save booking:', err));
     }
 
     setStep(nextStep);

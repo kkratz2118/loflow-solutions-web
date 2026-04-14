@@ -66,7 +66,21 @@ export default function BookingModal({ isOpen, onClose, defaultTool = '', toolOp
         return;
       }
       setShowTermsWarning(false);
-      console.log('Booking form data:', { firstName, lastName, email, company, phone, tool, message });
+
+      fetch('/api/booking', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          company: company || null,
+          phone: phone || null,
+          tool,
+          message: message || null,
+          agreed_to_terms: agreedToTerms,
+        }),
+      }).catch((err) => console.error('Failed to save booking:', err));
     }
 
     setStep(nextStep);

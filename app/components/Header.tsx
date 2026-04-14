@@ -9,7 +9,6 @@ interface HeaderProps {
 }
 
 const announcement = {
-  text: 'DataBuddy — AI-powered pipeline analytics is now available!',
   href: '/applications#app-0',
 };
 
@@ -55,7 +54,10 @@ export default function Header({ onOpenBooking }: HeaderProps) {
         <div className="notification-bar">
           <Link href={announcement.href} className="notification-bar-link" onClick={(e) => scrollToCenter(e, 'app-0', announcement.href)}>
             <span className="notification-bar-badge">NEW</span>
-            {announcement.text}
+            <span className="notification-bar-text">
+              <span className="notification-bar-text-top">DataBuddy</span>
+              <span className="notification-bar-text-break">AI-powered pipeline analytics is now available!</span>
+            </span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
           </Link>
           <button className="notification-bar-close" onClick={dismissBanner} aria-label="Dismiss">

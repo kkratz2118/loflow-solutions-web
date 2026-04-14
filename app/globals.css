@@ -183,6 +183,12 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
 .notification-bar-close:hover {
   opacity: 1;
 }
+.notification-bar-text-top::after {
+  content: ' — ';
+}
+.notification-bar-text-break {
+  display: inline;
+}
 
 /* ─── HEADER ──────────────────────────────────────── */
 .main-content {
@@ -2181,6 +2187,11 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
   .integrations-orbit-center { padding: 30px; }
   .integrations-orbit-center .heading-section { font-size: 1rem; }
   .service-card { padding: 20px; }
+  .notification-bar { padding: 8px 12px; }
+  .notification-bar-text { text-align: center; }
+  .notification-bar-text-top { font-weight: 800; }
+  .notification-bar-text-top::after { content: none; }
+  .notification-bar-text-break { display: block; font-size: 0.65rem; }
 }
 
 /* ─── HIGHLIGHT ────────────────────────────────────── */

@@ -26,12 +26,14 @@ export default function Header({ onOpenBooking }: HeaderProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToCenter = (e: React.MouseEvent, id: string, href?: string) => {
+  const scrollToCenter = (e: React.MouseEvent, id: string, fallbackHref?: string) => {
+    e.preventDefault();
     const el = document.getElementById(id);
     if (el) {
-      e.preventDefault();
       const top = el.getBoundingClientRect().top + window.scrollY - (window.innerHeight / 2) + (el.offsetHeight / 2);
-      window.scrollTo({ top, behavior: 'smooth' });
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    } else if (fallbackHref) {
+      window.location.href = fallbackHref;
     }
   };
 
@@ -39,7 +41,7 @@ export default function Header({ onOpenBooking }: HeaderProps) {
     <header className={`site-header${scrolled ? ' scrolled' : ''}${bannerVisible ? ' has-banner' : ''}`} id="top">
       {bannerVisible && (
         <div className="notification-bar">
-          <Link href={announcement.href} className="notification-bar-link" onClick={(e) => scrollToCenter(e, 'app-0')}>
+          <Link href={announcement.href} className="notification-bar-link" onClick={(e) => scrollToCenter(e, 'app-0', announcement.href)}>
             <span className="notification-bar-badge">NEW</span>
             {announcement.text}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
@@ -54,8 +56,8 @@ export default function Header({ onOpenBooking }: HeaderProps) {
           <Image src="/images/loflow-favicon.png" alt="LOFlow Solutions Logo" width={160} height={40} priority />
         </Link>
         <div className="nav-links">
-          <a href="/#how-it-works" className="nav-link" onClick={(e) => scrollToCenter(e, 'how-it-works')}>Process</a>
-          <a href="/#services" className="nav-link" onClick={(e) => scrollToCenter(e, 'services')}>Services</a>
+          <a href="/#how-it-works" className="nav-link" onClick={(e) => scrollToCenter(e, 'how-it-works', '/#how-it-works')}>Process</a>
+          <a href="/#services" className="nav-link" onClick={(e) => scrollToCenter(e, 'services', '/#services')}>Services</a>
           <Link href="/applications" className="nav-link">Our Tools</Link>
         </div>
         <button className="nav-cta" onClick={onOpenBooking}>
@@ -71,8 +73,8 @@ export default function Header({ onOpenBooking }: HeaderProps) {
         </button>
       </nav>
       <div className={`mobile-menu${mobileMenuOpen ? ' open' : ''}`}>
-        <a href="/#how-it-works" className="mobile-nav-link" onClick={(e) => { scrollToCenter(e, 'how-it-works'); setMobileMenuOpen(false); }}>Process</a>
-        <a href="/#services" className="mobile-nav-link" onClick={(e) => { scrollToCenter(e, 'services'); setMobileMenuOpen(false); }}>Services</a>
+        <a href="/#how-it-works" className="mobile-nav-link" onClick={(e) => { scrollToCenter(e, 'how-it-works', '/#how-it-works'); setMobileMenuOpen(false); }}>Process</a>
+        <a href="/#services" className="mobile-nav-link" onClick={(e) => { scrollToCenter(e, 'services', '/#services'); setMobileMenuOpen(false); }}>Services</a>
         <Link href="/applications" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>Our Tools</Link>
         <button className="mobile-cta" onClick={() => { setMobileMenuOpen(false); onOpenBooking(); }}>Book A Free Call</button>
       </div>

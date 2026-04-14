@@ -54,6 +54,26 @@ export default function HomePage() {
     return () => clearInterval(timer);
   }, [nextService]);
 
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      // Strip the hash immediately to prevent the browser's default scroll-to-anchor
+      history.replaceState(null, '', window.location.pathname);
+      window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+
+      const scrollToHash = () => {
+        const el = document.querySelector(hash) as HTMLElement | null;
+        if (el) {
+          const top = el.getBoundingClientRect().top + window.scrollY - (window.innerHeight / 2) + (el.offsetHeight / 2);
+          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        }
+        // Restore the hash without triggering scroll
+        history.replaceState(null, '', window.location.pathname + hash);
+      };
+      setTimeout(scrollToHash, 300);
+    }
+  }, []);
+
   return (
     <>
       <Header onOpenBooking={() => setBookingOpen(true)} />

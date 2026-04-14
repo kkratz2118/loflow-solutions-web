@@ -58,20 +58,33 @@ export default function ApplicationsPage() {
   const [selectedTool, setSelectedTool] = useState('');
 
   useEffect(() => {
-    const scrollToHash = () => {
-      const hash = window.location.hash;
-      if (hash) {
+    const hash = window.location.hash;
+    if (hash) {
+      history.replaceState(null, '', window.location.pathname);
+      window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+
+      setTimeout(() => {
         const el = document.querySelector(hash) as HTMLElement | null;
         if (el) {
           const top = el.getBoundingClientRect().top + window.scrollY - (window.innerHeight / 2) + (el.offsetHeight / 2);
-          window.scrollTo({ top, behavior: 'smooth' });
+          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        }
+        history.replaceState(null, '', window.location.pathname + hash);
+      }, 300);
+    }
+
+    const onHashChange = () => {
+      const h = window.location.hash;
+      if (h) {
+        const el = document.querySelector(h) as HTMLElement | null;
+        if (el) {
+          const top = el.getBoundingClientRect().top + window.scrollY - (window.innerHeight / 2) + (el.offsetHeight / 2);
+          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
         }
       }
     };
-
-    setTimeout(scrollToHash, 100);
-    window.addEventListener('hashchange', scrollToHash);
-    return () => window.removeEventListener('hashchange', scrollToHash);
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
 
   return (

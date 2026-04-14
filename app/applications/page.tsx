@@ -9,6 +9,7 @@ const apps = [
   {
     label: 'Application 01',
     name: 'DataBuddy',
+    logoSrc: '/images/data-buddy-logo.jpeg',
     reversed: false,
     description: 'AI-powered mortgage pipeline analytics that let you query your lending data in plain English. Stop building reports and start making decisions with instant pipeline visibility — no spreadsheets, no training, no waiting on IT.',
     features: [
@@ -20,6 +21,8 @@ const apps = [
     screenshotSrc: '/images/databuddy-screenshot.png',
     screenshotAlt: 'DataBuddy pipeline analytics dashboard',
     comingSoon: false,
+    ctaLabel: 'Learn More!',
+    ctaHref: 'https://www.data-buddy.ai/',
   },
   {
     label: 'Application 02',
@@ -112,7 +115,10 @@ export default function ApplicationsPage() {
                 style={app.comingSoon ? { filter: 'blur(6px)', pointerEvents: 'none', userSelect: 'none' } : undefined}
               >
                 <div className="app-name-mobile">
-                  <h2 className="heading-section" style={{ textTransform: 'none', fontFamily: 'var(--font)' }}>{app.name}</h2>
+                  <h2 className="heading-section" style={{ textTransform: 'none', fontFamily: 'var(--font)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    {app.logoSrc && <img src={app.logoSrc} alt={`${app.name} logo`} style={{ width: '60px', height: '60px', borderRadius: '8px', mixBlendMode: 'multiply', marginLeft: '-8px' }} />}
+                    {app.name}
+                  </h2>
                 </div>
                 <div className="app-image-col">
                   <div className="app-screenshot">
@@ -127,7 +133,10 @@ export default function ApplicationsPage() {
                   </div>
                 </div>
                 <div className="app-info-col">
-                  <h2 className="heading-section app-name-desktop" style={{ textTransform: 'none', fontFamily: 'var(--font)' }}>{app.name}</h2>
+                  <h2 className="heading-section app-name-desktop" style={{ textTransform: 'none', fontFamily: 'var(--font)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    {app.logoSrc && <img src={app.logoSrc} alt={`${app.name} logo`} style={{ width: '60px', height: '60px', borderRadius: '8px', mixBlendMode: 'multiply', marginLeft: '-8px' }} />}
+                    {app.name}
+                  </h2>
                   <p className="subheadline">{app.description}</p>
                   <ul className="app-features">
                     {app.features.map((feat, j) => (
@@ -135,13 +144,25 @@ export default function ApplicationsPage() {
                     ))}
                   </ul>
                   {!app.comingSoon && (
-                    <button
-                      className="btn-primary"
-                      style={{ width: 'fit-content' }}
-                      onClick={() => { setSelectedTool(app.name); setBookingOpen(true); }}
-                    >
-                      SCHEDULE YOUR DEMO! &rarr;
-                    </button>
+                    app.ctaHref ? (
+                      <a
+                        className="btn-primary"
+                        style={{ width: 'fit-content', display: 'inline-block' }}
+                        href={app.ctaHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {app.ctaLabel} &rarr;
+                      </a>
+                    ) : (
+                      <button
+                        className="btn-primary"
+                        style={{ width: 'fit-content' }}
+                        onClick={() => { setSelectedTool(app.name); setBookingOpen(true); }}
+                      >
+                        SCHEDULE YOUR DEMO! &rarr;
+                      </button>
+                    )
                   )}
                 </div>
               </div>

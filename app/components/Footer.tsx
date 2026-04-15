@@ -9,11 +9,11 @@ export default function Footer({ showSocial = true }: FooterProps) {
   return (
     <footer className="site-footer">
       <div className="footer-inner">
-        <Link href="/" className="footer-logo-link">
+        <Link href="/home" className="footer-logo-link">
           <Image src="/images/loflow-favicon.png" alt="LOFlow Solutions" width={120} height={30} />
         </Link>
         <nav className="footer-nav">
-          <Link href="/#services">Services</Link>
+          <Link href="/home#services">Services</Link>
           <Link href="/applications">Our Tools</Link>
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>

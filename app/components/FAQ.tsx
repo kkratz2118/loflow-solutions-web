@@ -2,7 +2,20 @@
 
 import { useState } from 'react';
 
-const faqs = [
+export interface FAQItem {
+  question: string;
+  answer: string;
+  highlight?: string;
+}
+
+interface FAQProps {
+  items?: FAQItem[];
+  tag?: string;
+  heading?: React.ReactNode;
+  subhead?: string;
+}
+
+const defaultFaqs: FAQItem[] = [
   {
     question: 'What types of processes can you automate?',
     answer: 'We specialize in automating repetitive workflows across operations, marketing, sales, and customer support using AI and custom logic.',
@@ -30,8 +43,14 @@ const faqs = [
   },
 ];
 
-export default function FAQ() {
+export default function FAQ({
+  items,
+  tag = "FAQ'S",
+  heading = <>Frequently <span className="highlight">Asked Questions</span></>,
+  subhead = 'Find quick answers to the most common support questions',
+}: FAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const faqs = items ?? defaultFaqs;
 
   const toggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -41,9 +60,9 @@ export default function FAQ() {
     <section id="faq" className="section-pad">
       <div className="container">
         <div className="text-center mb-12">
-          <div className="section-tag">FAQ&apos;S</div>
-          <h2 className="heading-section">Frequently <span className="highlight">Asked Questions</span></h2>
-          <p className="section-sub" style={{ margin: '0 auto 32px' }}>Find quick answers to the most common support questions</p>
+          <div className="section-tag">{tag}</div>
+          <h2 className="heading-section">{heading}</h2>
+          <p className="section-sub" style={{ margin: '0 auto 32px' }}>{subhead}</p>
         </div>
 
         <div className="faq-list" style={{ maxWidth: '700px', margin: '0 auto' }}>
@@ -55,10 +74,12 @@ export default function FAQ() {
               </button>
               <div className="faq-answer">
                 <p>{faq.answer}</p>
-                <div className="faq-highlight">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                  {faq.highlight}
-                </div>
+                {faq.highlight && (
+                  <div className="faq-highlight">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    {faq.highlight}
+                  </div>
+                )}
               </div>
             </div>
           ))}

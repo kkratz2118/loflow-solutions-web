@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import BookingModal from '../components/BookingModal';
@@ -12,7 +13,13 @@ import HeroParallax from '../components/HeroParallax';
 export default function HomePage() {
   const [bookingOpen, setBookingOpen] = useState(false);
   const [serviceIdx, setServiceIdx] = useState(0);
-  const serviceCards = [
+  const serviceCards: Array<{
+    badges: string[] | null;
+    icon: React.ReactNode;
+    title: string;
+    desc: string;
+    href?: string;
+  }> = [
     {
       badges: ['Clear to Close Update', 'Loaniversary Reminder', 'Referral Follow-Up'],
       icon: null,
@@ -42,6 +49,13 @@ export default function HomePage() {
       icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>,
       title: 'Ongoing CRM Support',
       desc: 'Get expert guidance to optimize your system as your business grows. Optional support retainer keeps your CRM running smoothly and profitably.',
+    },
+    {
+      badges: null,
+      icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M7 7h10M7 11h6"/></svg>,
+      title: 'Custom Landing Pages',
+      desc: 'Squeeze pages, application funnels, VSLs, and rate-quote tools built to capture high-intent borrowers and pipe them straight into your CRM.',
+      href: '/services/landing-pages',
     },
   ];
 
@@ -313,6 +327,25 @@ export default function HomePage() {
                       )}
                       <div className="service-title">{card.title}</div>
                       <p className="service-desc">{card.desc}</p>
+                      {card.href && isCenter && (
+                        <Link
+                          href={card.href}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 6,
+                            marginTop: 12,
+                            fontFamily: 'var(--font)',
+                            fontSize: '0.7rem',
+                            fontWeight: 700,
+                            letterSpacing: '0.08em',
+                            textTransform: 'uppercase',
+                            color: 'var(--accent-dark)',
+                          }}
+                        >
+                          Explore landing pages &rarr;
+                        </Link>
+                      )}
                     </div>
                   );
                 })}

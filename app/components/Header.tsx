@@ -72,6 +72,7 @@ export default function Header({ onOpenBooking }: HeaderProps) {
         <div className="nav-links">
           <a href="/home#how-it-works" className="nav-link" onClick={(e) => scrollToCenter(e, 'how-it-works', '/home#how-it-works')}>Process</a>
           <a href="/home#services" className="nav-link" onClick={(e) => scrollToCenter(e, 'services', '/home#services')}>Services</a>
+          <Link href="/services/landing-pages" className="nav-link">Landing Pages</Link>
           <Link href="/applications" className="nav-link">Our Tools</Link>
         </div>
         <button className="nav-cta" onClick={onOpenBooking}>
@@ -89,6 +90,7 @@ export default function Header({ onOpenBooking }: HeaderProps) {
       <div className={`mobile-menu${mobileMenuOpen ? ' open' : ''}`}>
         <a href="/home#how-it-works" className="mobile-nav-link" onClick={(e) => { scrollToCenter(e, 'how-it-works', '/home#how-it-works'); setMobileMenuOpen(false); }}>Process</a>
         <a href="/home#services" className="mobile-nav-link" onClick={(e) => { scrollToCenter(e, 'services', '/home#services'); setMobileMenuOpen(false); }}>Services</a>
+        <Link href="/services/landing-pages" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>Landing Pages</Link>
         <Link href="/applications" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>Our Tools</Link>
         <button className="mobile-cta" onClick={() => { setMobileMenuOpen(false); onOpenBooking(); }}>Book A Free Call</button>
       </div>

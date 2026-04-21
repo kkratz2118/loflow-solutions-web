@@ -14,6 +14,7 @@ export default function Footer({ showSocial = true }: FooterProps) {
         </Link>
         <nav className="footer-nav">
           <Link href="/home#services">Services</Link>
+          <Link href="/services/landing-pages">Landing Pages</Link>
           <Link href="/applications">Our Tools</Link>
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>

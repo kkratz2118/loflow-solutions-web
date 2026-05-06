@@ -107,12 +107,11 @@ export default function HomePage() {
               <Carousel />
             </div>
           </div>
-        </section>
-
-        {/* TRUSTED TOOLS — mobile only */}
-        <section className="carousel-mobile">
-          <div className="container">
-            <Carousel />
+          {/* TRUSTED TOOLS — mobile only, inside hero so parallax covers it */}
+          <div className="carousel-mobile">
+            <div className="container">
+              <Carousel />
+            </div>
           </div>
         </section>
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { AVAILABLE_APP_NAMES } from '../data/apps';
-import { generateEventId, trackEvent, trackLead } from '../lib/analytics';
+import { generateEventId, getStoredFbclid, trackEvent, trackLead } from '../lib/analytics';
 
 const ROAM_URL = 'https://ro.am/loflow-solutions-llc/lobby-3/';
 const ROAM_EMBED_SCRIPT = 'https://ro.am/lobbylinks/embed.js';
@@ -136,6 +136,7 @@ export default function BookingModal({ isOpen, onClose, defaultTool = '', toolOp
 
       const eventId = generateEventId();
       trackLead(eventId, { email, phone, firstName, lastName, tool });
+      const fbclid = getStoredFbclid();
 
       fetch('/api/booking', {
         method: 'POST',
@@ -150,6 +151,8 @@ export default function BookingModal({ isOpen, onClose, defaultTool = '', toolOp
           message: message || null,
           agreed_to_terms: agreedToTerms,
           event_id: eventId,
+          fbclid: fbclid?.value ?? null,
+          fbclid_ts: fbclid?.ts ?? null,
         }),
       })
         .then((res) => {

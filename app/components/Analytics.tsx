@@ -3,7 +3,13 @@
 import Script from 'next/script';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { useEffect, useState } from 'react';
-import { CONSENT_EVENT, getConsent, type ConsentState } from '../lib/analytics';
+import {
+  CONSENT_EVENT,
+  captureFbclidFromUrl,
+  ensureFbcCookie,
+  getConsent,
+  type ConsentState,
+} from '../lib/analytics';
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
@@ -13,6 +19,7 @@ export default function Analytics() {
 
   useEffect(() => {
     setConsent(getConsent());
+    captureFbclidFromUrl();
     const handler = (e: Event) => {
       const detail = (e as CustomEvent<ConsentState>).detail;
       setConsent(detail);
@@ -33,8 +40,9 @@ export default function Analytics() {
   }, [consent]);
 
   useEffect(() => {
-    if (consent !== 'accepted' || !window.fbq) return;
-    window.fbq('track', 'PageView');
+    if (consent !== 'accepted') return;
+    ensureFbcCookie();
+    if (window.fbq) window.fbq('track', 'PageView');
   }, [consent]);
 
   return (

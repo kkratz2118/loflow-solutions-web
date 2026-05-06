@@ -22,14 +22,17 @@ export default function HeroParallax() {
     const count = isMobile ? 8 : 20;
 
     setParticles(
-      Array.from({ length: count }, (_, i) => ({
-        id: i,
-        left: Math.random() * 100,
-        size: 5 + Math.random() * 10,
-        duration: 6 + Math.random() * 8,
-        delay: Math.random() * 8,
-        opacity: 0.25 + Math.random() * 0.45,
-      }))
+      Array.from({ length: count }, (_, i) => {
+        const duration = 6 + Math.random() * 8;
+        return {
+          id: i,
+          left: Math.random() * 100,
+          size: 5 + Math.random() * 10,
+          duration,
+          delay: -Math.random() * duration,
+          opacity: 0.25 + Math.random() * 0.45,
+        };
+      })
     );
   }, []);
 

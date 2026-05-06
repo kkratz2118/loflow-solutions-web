@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { AVAILABLE_APP_NAMES } from '../data/apps';
+import { generateEventId, trackEvent, trackLead } from '../lib/analytics';
 
 const ROAM_URL = 'https://ro.am/loflow-solutions-llc/lobby-3/';
 const ROAM_EMBED_SCRIPT = 'https://ro.am/lobbylinks/embed.js';
@@ -49,6 +50,11 @@ export default function BookingModal({ isOpen, onClose, defaultTool = '', toolOp
     onClose();
     setStep(1);
   }, [onClose]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    trackEvent('booking_modal_opened', { tool: defaultTool || undefined });
+  }, [isOpen, defaultTool]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -128,6 +134,9 @@ export default function BookingModal({ isOpen, onClose, defaultTool = '', toolOp
       }
       setShowTermsWarning(false);
 
+      const eventId = generateEventId();
+      trackLead(eventId, { email, phone, firstName, lastName, tool });
+
       fetch('/api/booking', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -140,6 +149,7 @@ export default function BookingModal({ isOpen, onClose, defaultTool = '', toolOp
           tool,
           message: message || null,
           agreed_to_terms: agreedToTerms,
+          event_id: eventId,
         }),
       })
         .then((res) => {

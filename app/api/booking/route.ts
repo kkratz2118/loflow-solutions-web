@@ -1,14 +1,33 @@
 import { NextResponse } from 'next/server';
+import { sendCAPIEvent } from '@/app/lib/meta-capi';
 
 const GHL_API_URL = 'https://services.leadconnectorhq.com/contacts/upsert';
 
 export async function POST(request: Request) {
   const body = await request.json();
 
-  const { first_name, last_name, email, company, phone, tool, message, agreed_to_terms } = body;
+  const { first_name, last_name, email, company, phone, tool, message, agreed_to_terms, event_id } = body;
 
   if (!first_name || !last_name || !email) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+  }
+
+  if (event_id) {
+    const fwd = request.headers.get('x-forwarded-for');
+    const ipAddress = fwd ? fwd.split(',')[0].trim() : undefined;
+    const userAgent = request.headers.get('user-agent') ?? undefined;
+    const referer = request.headers.get('referer') ?? undefined;
+    const cookieHeader = request.headers.get('cookie') ?? '';
+    const fbp = cookieHeader.match(/(?:^|;\s*)_fbp=([^;]+)/)?.[1];
+    const fbc = cookieHeader.match(/(?:^|;\s*)_fbc=([^;]+)/)?.[1];
+
+    sendCAPIEvent({
+      eventName: 'Lead',
+      eventId: event_id,
+      eventSourceUrl: referer,
+      user: { email, phone, firstName: first_name, lastName: last_name, ipAddress, userAgent, fbp, fbc },
+      custom: { contentName: tool },
+    });
   }
 
   const ghlBody: Record<string, unknown> = {

@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, after } from 'next/server';
 import { sendCAPIEvent } from '@/app/lib/meta-capi';
 
 const GHL_API_URL = 'https://services.leadconnectorhq.com/contacts/upsert';
@@ -22,12 +22,23 @@ export async function POST(request: Request) {
     const fbcFromCookie = cookieHeader.match(/(?:^|;\s*)_fbc=([^;]+)/)?.[1];
     const fbc = fbcFromCookie ?? (fbclid ? `fb.1.${fbclid_ts ?? Date.now()}.${fbclid}` : undefined);
 
-    sendCAPIEvent({
-      eventName: 'Lead',
-      eventId: event_id,
-      eventSourceUrl: referer,
-      user: { email, phone, firstName: first_name, lastName: last_name, ipAddress, userAgent, fbp, fbc },
-      custom: { contentName: tool },
+    // Run CAPI in the background using next/server `after()`. Without this, the unawaited
+    // CAPI fetch can be killed by the Vercel runtime when the function returns its response —
+    // especially fast paths where GHL responds quickly and there's no other I/O to keep the
+    // function alive. `after()` runs after the response is sent without the runtime tearing
+    // down in-flight work.
+    after(async () => {
+      try {
+        await sendCAPIEvent({
+          eventName: 'Lead',
+          eventId: event_id,
+          eventSourceUrl: referer,
+          user: { email, phone, firstName: first_name, lastName: last_name, ipAddress, userAgent, fbp, fbc },
+          custom: { contentName: tool },
+        });
+      } catch (err) {
+        console.error('Meta CAPI background error:', err);
+      }
     });
   }
 

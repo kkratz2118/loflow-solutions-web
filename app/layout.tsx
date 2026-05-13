@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/next';
 import Analytics from './components/Analytics';
 import CookieBanner from './components/CookieBanner';
 import './globals.css';
@@ -58,6 +59,7 @@ export default function RootLayout({
         {children}
         <CookieBanner />
         <Analytics />
+        <VercelAnalytics />
         <Script src="https://ro.am/lobbylinks/embed.js" strategy="lazyOnload" />
       </body>
     </html>
